@@ -1,0 +1,52 @@
+<div id="login-page">
+    <div class="container">
+        <form id='login' class="form-login">
+            <!--LOGIN FORM-->
+            <h2 class="form-login-heading">login</h2>
+            <div class="login-wrap">
+                <input id='user' type="text" class="form-control" placeholder="User ID" autofocus required="">
+                <br>
+                <input id='mdp' type="password" class="form-control" placeholder="Password" required="">
+                <br>
+                <div id='error'></div>
+                <button id='loginForm' class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> CONNECT</button>
+                <hr>
+                <div class="registration">
+                    Don't have an account yet?<br/>
+                    <a id='createAccount' class="">
+                        Create an account
+                    </a>
+                </div>
+            </div>
+        </form>	 
+
+        <!--REGISTER FORM-->
+        <form  id='registerDiv'  style="display:none;" class="form-login">  
+            <h2 class="form-login-heading">register</h2>          
+            <div class="login-wrap">
+                <br>
+                <input id='registerUser' type="text" class="form-control" placeholder="User ID" autofocus required="">
+                <br>
+                <input id='registerMdp' type="password" class="form-control" placeholder="Password" required="">
+                <br>
+                <input id='registerMdp2' type="password" class="form-control" placeholder="Password confirmation" required="">
+                <br>
+                <div id='errorRegister'></div>
+                <button id='registerForm' class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> REGISTER</button>
+                <hr>
+                <div class="registration">
+                    Want to log in ?<br/>
+                    <a id='loginPage' class="">
+                        Login
+                    </a>
+                </div>
+            </div>
+
+        </form>
+        <script type="text/javascript" src="assets/js/jquery.backstretch.min.js"></script>
+        <script>
+            $.backstretch("assets/img/bg-headsets.jpg", {speed: 500});
+        </script>
+        <script src='login.js'></script></div>
+</div>
+
