@@ -2,10 +2,11 @@
 
 require './db.php';
 session_start();
-$data = $_POST['data'];
-
-if (isset($data)) {
-    echo 0;
-}else{
-    echo "ok";
-}
+print_r($_FILES);
+//print_r($_POST);
+//$data = $_POST['id'];
+//if ($data) {
+//    echo $data;
+//} else {
+//    echo "failure";
+//}

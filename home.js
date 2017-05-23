@@ -2,7 +2,7 @@ var jsmediatags = window.jsmediatags;
 var uploadedSongs = [];
 var songNames = [];
 var songTags = {};
-
+var t;
 $(function () {
 
     $('#titleUser').html(connectedUser);
@@ -11,9 +11,13 @@ $(function () {
         connectedUser = "";
     });
     $('#inputFile').change(function (e) {
+        uploadedSongs = [];
         for (var i = 0; i < e.target.files.length; i++) {
 
-            songNames.push({filename: e.target.files[i].name});
+            songNames.push({
+                filename: e.target.files[i].name
+            });
+
             jsmediatags.read(e.target.files[i], {
                 onSuccess: function (tag) {
                     songTags = {
@@ -32,28 +36,29 @@ $(function () {
 
         }
     });
+
     $('#formUpload').submit(function (e) {
         e.preventDefault();
         mergeArray(uploadedSongs, songNames);
+        console.log(uploadedSongs);
+        var fileInput = $('#inputFile')[0];
+        var frmData = new FormData();
+        
+        for (var i = 0; i < fileInput.files.length; i++) {
+            frmData.append('files[]', fileInput.files[i]);
+            frmData.append('id3[]', uploadedSongs[i]);
+        }
 
-        var form = $('form')[0]; // You need to use standard javascript object here
-        var formData = new FormData(form);
-        uploadFiles(formData);
+        
+        uploadFiles(frmData);
     });
-    $('#btnUpload').click(function () {
-        mergeArray(uploadedSongs, songNames);
 
-        var form = $('form')[0]; // You need to use standard javascript object here
-        var formData = new FormData(form);
-        uploadFiles(formData);
-    });
 });
 function uploadFiles(form) {
-    console.log(form);
-    $.post({
+    $.ajax({
         url: './http/uploadFiles.php',
-        //type: 'post',
-        data: {data: form},
+        data: form,
+        type: 'post',
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
         processData: false, // NEEDED, DON'T OMIT THIS
         success: function (response) {

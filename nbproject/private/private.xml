@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/School/_TPI/project/AudioFilePlayer_template/routes.js</file>
-            <file>file:/E:/School/_TPI/project/AudioFilePlayer_template/views/upload.html</file>
-            <file>file:/E:/School/_TPI/project/AudioFilePlayer_template/login.js</file>
-            <file>file:/E:/School/_TPI/project/AudioFilePlayer_template/http/uploadFiles.php</file>
-            <file>file:/E:/School/_TPI/project/AudioFilePlayer_template/views/log.html</file>
-            <file>file:/E:/School/_TPI/project/AudioFilePlayer_template/http/db.php</file>
-            <file>file:/E:/School/_TPI/project/AudioFilePlayer_template/http/insertUser.php</file>
-            <file>file:/E:/School/_TPI/project/AudioFilePlayer_template/home.js</file>
+            <file>file:/E:/School/_TPI/project/AudioFilePlayer/http/uploadFiles.php</file>
+            <file>file:/E:/School/_TPI/project/AudioFilePlayer/views/upload.html</file>
+            <file>file:/E:/School/_TPI/project/AudioFilePlayer/home.js</file>
+            <file>file:/E:/School/_TPI/project/AudioFilePlayer/http/insertUser.php</file>
+            <file>file:/E:/School/_TPI/project/AudioFilePlayer/login.js</file>
+            <file>file:/E:/School/_TPI/project/AudioFilePlayer/index.html</file>
+            <file>file:/E:/School/_TPI/project/AudioFilePlayer/routes.js</file>
         </group>
     </open-files>
 </project-private>
