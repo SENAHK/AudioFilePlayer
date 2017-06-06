@@ -10,7 +10,7 @@ $(function () {
         // Call ajax to check login on server-side
         $.ajax({
             type: 'post',
-            url: 'http/login.php',
+            url: 'http/logUser.php',
             data: {
                 user: user,
                 mdp: mdp

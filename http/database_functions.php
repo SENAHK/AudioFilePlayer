@@ -1,9 +1,13 @@
 <?php
+/*
+ * Auteur    : Michael RAMUSI
+ * Date      : Juin 2017
+ * Copyright : TPI 2017 - RAMUSI Michael
+ * Fichier   : database_access.inc
+ * Fonction  : Contient les fonctions CRUD
+ */
 
-DEFINE('DB_HOST', "127.0.0.1");
-DEFINE('DB_NAME', "audioFilePlayer");
-DEFINE('DB_USER', "root");
-DEFINE('DB_PASS', "");
+require 'database_access.inc';
 
 /**
  * getConnexion lance une connexion vers la base de données

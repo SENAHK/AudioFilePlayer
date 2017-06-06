@@ -1,6 +1,6 @@
 <?php
 
-require './db.php';
+require './database_functions.php';
 session_start();
 
 // Valeurs filtrées des inputs que le serveur a reçu du call ajax

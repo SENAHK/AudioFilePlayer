@@ -60,7 +60,7 @@ function uploadFiles(form) {
         data: form,
         type: 'post',
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-        processData: false, // NEEDED, DON'T OMIT THIS
+        processData: false, 
         success: function (response) {
             alert(response);
         }, error: function (jqXHR, textStatus, errorThrown) {

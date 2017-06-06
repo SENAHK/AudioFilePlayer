@@ -1,6 +1,6 @@
 <?php
 
-require './db.php';
+require './database_functions.php';
 session_start();
 
 $user = filter_input(INPUT_GET, "user", FILTER_SANITIZE_STRING);
