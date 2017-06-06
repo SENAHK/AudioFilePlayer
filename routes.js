@@ -113,6 +113,7 @@ function loadHtmlFile(file, context) {
 
     jQuery.ajaxSetup({async: true});
 }
+
 function setActiveLink(name) {
     var ul = $('ul');
     ul.children().removeClass('active');
