@@ -1,4 +1,5 @@
 var connectedUser = "";
+connectedUser = getUserSession();
 
 // Document is ready
 $(function () {
@@ -23,7 +24,8 @@ var routesEnum = {
     SINGLE_ALBUM: 'album/',
     SINGLE_ARTISTE: 'artiste/',
     ABOUT: 'about/',
-    LOGIN: 'login/'
+    LOGIN: 'login/',
+    LOGOUT: 'logout/'
 }
 
 /**
@@ -60,8 +62,8 @@ function render(url) {
             if (connectedUser != "") {
                 $('#login-page').remove();
                 $('#indexBody').show('slow');
-                
-                loadHtmlFile('views/upload.html', '#app');                
+
+                loadHtmlFile('views/upload.html', '#app');
             } else {
                 // Go to the login/register page
                 gotoRoute(routesEnum.LOGIN);
@@ -84,6 +86,10 @@ function render(url) {
         '#login': function () {
             $('#indexBody').hide();
             loadHtmlFile('views/log.html', 'body');
+        },
+        '#logout': function () {
+            destroySession();
+            gotoRoute(routesEnum.LOGIN);
         }
     };
     // Execute the needed function depending on the anchor in the url, go to the right route in fact.
@@ -113,4 +119,18 @@ function setActiveLink(name) {
     var a = $('a[href="#' + name + '"]');
     a.parent().addClass('active');
     a.removeClass('active');
+}
+
+function getUserSession() {
+    return $.get({
+        url: './http/getSession.php',
+        async: false
+    }).responseText;    
+}
+
+function destroySession() {
+    $.get({
+        url: './http/destroySession.php',
+        async: false
+    });
 }

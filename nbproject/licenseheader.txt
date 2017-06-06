@@ -1,0 +1,14 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+
+${licensePrefix}Auteur	: Michael Ramusi
+${licensePrefix}Date	: ${date} 
+${licensePrefix}Projet	: ${project.name}
+${licensePrefix}Copyright	: TPI 2017 - Michael RAMUSI
+${licensePrefix}Fichier	: ${name}
+${licensePrefix}Fonction	:
+
+<#if licenseLast??>
+${licenseLast}
+</#if>
