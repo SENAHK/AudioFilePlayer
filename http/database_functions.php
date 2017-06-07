@@ -58,6 +58,7 @@ function insertUser($username, $password) {
     $statement->bindParam(":user", $username, PDO::PARAM_STR);
     $statement->bindParam(":pass", $password, PDO::PARAM_STR);
     $statement->execute();
+    return getConnexion()->lastInsertId();
 }
 
 function albumExists($nameAlbum) {
@@ -122,6 +123,20 @@ function insertTitle($nameTitle, $idAlbum, $idUser) {
     $statement->execute();
 }
 
+function titleExists($nameTitle, $idAlbum, $idUser) {
+    $query = "SELECT EXISTS(SELECT * "
+            . "FROM titres "
+            . "WHERE idAlbum=:albumId "
+            . "AND nomTitre=:titreName "
+            . "AND idUtilisateur=:userId)";
+    $statement = getConnexion()->prepare($query);
+    $statement->bindParam(":titreName", $nameTitle, PDO::PARAM_STR);
+    $statement->bindParam(":albumId", $idAlbum, PDO::PARAM_INT);
+    $statement->bindParam(":userId", $idUser, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchColumn();
+}
+
 /**
  * Insert the song's informations in the db with a sql transaction
  * @param string $artist name of the artist
@@ -150,7 +165,10 @@ function insertNewSong($artist, $album, $song, $idUser) {
         if (!manyToManyAvoirExists($idArtist, $idAlbum)) {
             insertManyToManyAvoir($idArtist, $idAlbum);
         }
-        insertTitle($song, $idAlbum, $idUser);
+        // prevent duplicate entries
+        if (!titleExists($song, $idAlbum, $idUser)) {
+            insertTitle($song, $idAlbum, $idUser);
+        }
         $connection->commit();
         return true;
     } catch (Exception $ex) {

@@ -8,10 +8,13 @@ $user = filter_input(INPUT_GET, "user", FILTER_SANITIZE_STRING);
 $password = sha1(filter_input(INPUT_GET, "mdp", FILTER_SANITIZE_STRING));
 
 if (($user) && ($password)) {
-    try {        
-        insertUser($user, $password);
+    try {
+        $idUser = insertUser($user, $password);
+        $_SESSION['user'] = $user;
+        $_SESSION['idUser'] = $idUser;
         echo 1;
     } catch (Exception $ex) {
-        echo $ex->getMessage();;        
+        echo $ex->getMessage();
+        
     }
 } 
