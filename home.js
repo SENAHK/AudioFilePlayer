@@ -26,7 +26,7 @@ $(function () {
                         album: tag.tags.album,
                         year: tag.tags.year
                     };
-                    console.log(songTags);
+                    //console.log(songTags);
                     uploadedSongs.push(songTags);
                 },
                 onError: function (error) {
@@ -40,16 +40,16 @@ $(function () {
     $('#formUpload').submit(function (e) {
         e.preventDefault();
         mergeArray(uploadedSongs, songNames);
-        console.log(uploadedSongs);
+        //console.log(uploadedSongs);
         var fileInput = $('#inputFile')[0];
         var frmData = new FormData();
         
         for (var i = 0; i < fileInput.files.length; i++) {
+            //console.log(uploadedSongs[i]);
             frmData.append('files[]', fileInput.files[i]);
-            frmData.append('id3[]', uploadedSongs[i]);
+            frmData.append('id3[]', JSON.stringify( uploadedSongs[i]));
         }
 
-        
         uploadFiles(frmData);
     });
 
@@ -61,8 +61,10 @@ function uploadFiles(form) {
         type: 'post',
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
         processData: false, 
-        success: function (response) {
-            alert(response);
+        success: function (response) {            
+            response = $.parseJSON(response);
+            console.log(response);
+            //alert(response);
         }, error: function (jqXHR, textStatus, errorThrown) {
             alert('error');
         }
@@ -73,5 +75,5 @@ function mergeArray(songs, names) {
     for (var i = 0; i < names.length; i++) {
         $.extend(songs[i], names[i]);
     }
-    console.log(uploadedSongs);
+    //console.log(uploadedSongs);
 }

@@ -2,4 +2,39 @@
 
 require './database_functions.php';
 session_start();
-print_r($_FILES);
+//print_r($_FILES);
+
+$id3_datas = array();
+
+$id3 = $_REQUEST['id3'];
+$idUser = $_SESSION['idUser'];
+$songsAreInserted = false;
+// decode the json values received by home.js
+foreach ($id3 as $value) {
+    // if parameter of json_decode is true: returns an array instead
+    // of object
+    array_push($id3_datas, json_decode($value, true));
+}
+foreach ($id3_datas as $title_datas) {
+    //print_r($title_datas);
+    $title = $title_datas["title"];
+    $artist = $title_datas["artist"];
+    $album = $title_datas["album"];
+    $year = $title_datas["year"];
+
+    try {
+        $songsAreInserted = insertNewSong($artist, $album, $title, $idUser);
+    } catch (Exception $ex) {
+        echo $ex->getMessage();
+    }
+}
+
+
+
+echo true;
+
+
+
+
+
+

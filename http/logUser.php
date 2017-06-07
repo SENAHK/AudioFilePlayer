@@ -12,6 +12,7 @@ if (($user) && ($password)) {
         $idUser = userExists($user, $password);
         if (is_numeric($idUser)) {
             $_SESSION['user'] = $user;
+            $_SESSION['idUser'] = $idUser;
             //$_SESSION['user'] = array("username" => $user, "password" => $password);
             echo $idUser;
         } else {
