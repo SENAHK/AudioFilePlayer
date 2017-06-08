@@ -1,10 +1,8 @@
-var connectedUser = "";
-connectedUser = getUserSession();
-
+initialize();
 // Document is ready
 $(function () {
     jQuery.ajaxSetup({cache: false});
-    
+
     // Listen to query hash change
     // in order to be able to go to the right part of the app
     $(window).on('hashchange', function () {
@@ -13,7 +11,10 @@ $(function () {
     });
     render(decodeURI(window.location.hash));
 });
-
+function initialize() {
+    window.connectedUser = "";
+    window.connectedUser = getUserSession();
+}
 /**
  * Enum for routes
  */
@@ -25,7 +26,8 @@ var routesEnum = {
     SINGLE_ARTISTE: 'artiste/',
     ABOUT: 'about/',
     LOGIN: 'login/',
-    LOGOUT: 'logout/'
+    LOGOUT: 'logout/',
+    UPLOAD: 'upload/'
 }
 
 /**
@@ -63,6 +65,7 @@ function render(url) {
                 $('#login-page').remove();
                 $('#indexBody').show('slow');
 
+                $('#app').html('');
                 loadHtmlFile('views/upload.html', '#app');
             } else {
                 // Go to the login/register page
@@ -90,6 +93,13 @@ function render(url) {
         '#logout': function () {
             destroySession();
             gotoRoute(routesEnum.LOGIN);
+        },
+        '#upload': function () {
+            if (connectedUser != "") {
+                jQuery.getScript("metadatasUpdate.js");
+            } else {
+                gotoRoute(routesEnum.LOGIN);
+            }
         }
     };
     // Execute the needed function depending on the anchor in the url, go to the right route in fact.
@@ -106,7 +116,6 @@ function render(url) {
  */
 function loadHtmlFile(file, context) {
     jQuery.ajaxSetup({async: false});
-
     $.get(file, '', function (data) {
         $(context).append(data);
     });
@@ -126,7 +135,7 @@ function getUserSession() {
     return $.get({
         url: './http/getSession.php',
         async: false
-    }).responseText;    
+    }).responseText;
 }
 
 function destroySession() {
