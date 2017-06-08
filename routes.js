@@ -4,7 +4,7 @@ connectedUser = getUserSession();
 // Document is ready
 $(function () {
     jQuery.ajaxSetup({cache: false});
-    //connectedUser = $('#sessionUser').val();
+    
     // Listen to query hash change
     // in order to be able to go to the right part of the app
     $(window).on('hashchange', function () {

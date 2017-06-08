@@ -26,7 +26,6 @@ $(function () {
                         album: tag.tags.album,
                         year: tag.tags.year
                     };
-                    //console.log(songTags);
                     uploadedSongs.push(songTags);
                 },
                 onError: function (error) {
@@ -45,7 +44,6 @@ $(function () {
         var frmData = new FormData();
         
         for (var i = 0; i < fileInput.files.length; i++) {
-            //console.log(uploadedSongs[i]);
             frmData.append('files[]', fileInput.files[i]);
             frmData.append('id3[]', JSON.stringify( uploadedSongs[i]));
         }
@@ -75,5 +73,4 @@ function mergeArray(songs, names) {
     for (var i = 0; i < names.length; i++) {
         $.extend(songs[i], names[i]);
     }
-    //console.log(uploadedSongs);
 }
