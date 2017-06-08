@@ -1,0 +1,2 @@
+https://stackoverflow.com/questions/2647867/how-to-determine-if-variable-is-undefined-or-null
+https://learn.jquery.com/using-jquery-core/iterating/

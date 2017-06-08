@@ -2,7 +2,6 @@ var jsmediatags = window.jsmediatags;
 var uploadedSongs = [];
 var songNames = [];
 var songTags = {};
-var t;
 $(function () {
 
     $('#titleUser').html(connectedUser);
@@ -14,9 +13,9 @@ $(function () {
         uploadedSongs = [];
         for (var i = 0; i < e.target.files.length; i++) {
 
-            songNames.push({
-                filename: e.target.files[i].name
-            });
+//            songNames.push({
+//                filename: e.target.files[i].name
+//            });
 
             jsmediatags.read(e.target.files[i], {
                 onSuccess: function (tag) {
@@ -38,28 +37,50 @@ $(function () {
 
     $('#formUpload').submit(function (e) {
         e.preventDefault();
-        mergeArray(uploadedSongs, songNames);
-        //console.log(uploadedSongs);
+        //mergeArray(uploadedSongs, songNames);
+
+        console.log(uploadedSongs);
+
+        getIncompleteFiles(uploadedSongs);
+
         var fileInput = $('#inputFile')[0];
         var frmData = new FormData();
-        
+
         for (var i = 0; i < fileInput.files.length; i++) {
             frmData.append('files[]', fileInput.files[i]);
-            frmData.append('id3[]', JSON.stringify( uploadedSongs[i]));
+            frmData.append('id3[]', JSON.stringify(uploadedSongs[i]));
         }
 
-        uploadFiles(frmData);
+        //uploadFiles(frmData);
     });
 
 });
+
+function getIncompleteFiles(files) {
+    var incompleteFiles = [];
+
+    $.each(files, function (index, file) {
+        $.each(file, function (index, value) {
+            if (value == null) {
+                incompleteFiles.push(file);
+                return false;
+            }
+        });
+    });
+    return incompleteFiles;
+}
+
+
+
+
 function uploadFiles(form) {
     $.ajax({
         url: './http/uploadFiles.php',
         data: form,
         type: 'post',
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-        processData: false, 
-        success: function (response) {            
+        processData: false,
+        success: function (response) {
             response = $.parseJSON(response);
             console.log(response);
             //alert(response);
