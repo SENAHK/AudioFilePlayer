@@ -9,18 +9,30 @@
  *                affiché sur modalUpdateMeta.html
  
  */
+
+
 $(function () {
-    $('#app').append(generateFormGroup(incompleteSongs));
-
     $('#modal-meta-validation').modal('show');
-
+    
+    $('#btnModal').click(function () {
+        $('#app').append(generateFormGroup(incompleteSongs));
+        $('#app').hide();
+        $('#app').show('slow');
+    });
+    
+    $('#btnUpload').click(function () {
+        if (location.hash == "#upload") {
+            alert("Veuillez d'abord envoyer les fichiers en cours de dépot");
+        }
+    });
+    
     $('#validate').click(function () {
         if (detectEmptyInputs("input[type=text]")) {
-            window.alert('ok');
-            var uploadedSongs = updateMetadatas('input[type=text]', incompleteSongs);
-
+            uploadedSongs = updateMetadatas('input[type=text]', incompleteSongs);
+            uploadFiles('#inputFile', 'files[]', 'id3[]');
+            window.alert('Fichiers déposés');
         } else {
-            window.alert('nok');
+            window.alert('Des champs sont vides');
         }
     });
 });
@@ -75,6 +87,7 @@ function generateFormGroup(datas) {
     html += '<div class="row mt">';
     html += '<div class="col-lg-12">';
     $.each(datas, function (index, data) {
+        console.log(data);
         html += "<div class='file-separation'>"
         html += '<h4 class="mb"><i class="fa fa-angle-right"></i>File: ' + data.filename + '</h4>';
         $.each(data, function (index, value) {

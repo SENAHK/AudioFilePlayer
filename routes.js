@@ -15,6 +15,7 @@ function initialize() {
     window.connectedUser = "";
     window.connectedUser = getUserSession();
     window.incompleteSongs = [];
+    window.uploadedSongs = [];
 }
 /**
  * Enum for routes

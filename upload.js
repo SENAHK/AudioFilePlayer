@@ -1,9 +1,8 @@
 var jsmediatags = window.jsmediatags;
-var uploadedSongs = [];
 var songNames = [];
 var songTags = {};
 $(function () {
-
+    uploadedSongs = [];
     $('#titleUser').html(connectedUser.toUpperCase());
 
     $('#logout').click(function () {
@@ -11,6 +10,7 @@ $(function () {
     });
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
+        songNames = [];
         for (var i = 0; i < e.target.files.length; i++) {
             songNames.push({filename: e.target.files[i].name});
             jsmediatags.read(e.target.files[i], {
@@ -29,6 +29,7 @@ $(function () {
             });
 
         }
+        console.log(uploadedSongs);
     });
 
     $('#formUpload').submit(function (e) {
@@ -36,8 +37,8 @@ $(function () {
         mergeArray(uploadedSongs, songNames);
 
         var incompleteFiles = getIncompleteFiles(uploadedSongs);
-
         // Si des fichiers sont incomplets
+        console.log(incompleteFiles.length);
         if (incompleteFiles.length > 0) {
             window.incompleteSongs = incompleteFiles;
             gotoRoute(routesEnum.UPLOAD);
@@ -69,16 +70,16 @@ function uploadFiles(fileInput, filesArray, id3Array) {
         frmData.append(filesArray, fileInput.files[i]);
         frmData.append(id3Array, JSON.stringify(uploadedSongs[i]));
     }
-
     $.ajax({
         url: './http/uploadFiles.php',
         data: frmData,
         type: 'post',
+        async: false,
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
         processData: false,
         success: function (response) {
-            console.log(response);
             response = JSON.stringify(response);
+            alert('Dépôt réussi');
         }, error: function (jqXHR, textStatus, errorThrown) {
             alert('error');
         }

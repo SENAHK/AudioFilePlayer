@@ -15,7 +15,7 @@ Fonction	: Affiche un formulaire permettant de modifier les métadonnées
 <div class="modal in" id="modal-meta-validation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style='background-color: indianred;'>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">Métadonnées manquantes</h4>
             </div>
@@ -23,10 +23,10 @@ Fonction	: Affiche un formulaire permettant de modifier les métadonnées
                 <p>Certains fichiers ont des métadonnées ID3 manquantes. Il est nécessaire de remplir les champs marqués en rouge afin de continuer le dépôts des fichiers mp3.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                <button id='btnModal' type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script src="./metadatasUpdate.js"></script>
+<script src="./updateID3.js"></script>
