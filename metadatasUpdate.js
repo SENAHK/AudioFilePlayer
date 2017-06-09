@@ -10,27 +10,73 @@
  
  */
 $(function () {
+    $('#app').append(generateFormGroup(incompleteSongs));
 
-    $('#app').append(generateFormGroup(incompleteSongs))
-
+    $('#modal-meta-validation').modal('show');
 
     $('#validate').click(function () {
         if (detectEmptyInputs("input[type=text]")) {
             window.alert('ok');
+            var uploadedSongs = updateMetadatas('input[type=text]', incompleteSongs);
+            
+            var fileInput = $('#inputFile')[0];
+            var frmData = new FormData();
+
+            for (var i = 0; i < fileInput.files.length; i++) {
+                frmData.append('files[]', fileInput.files[i]);
+                frmData.append('id3[]', JSON.stringify(uploadedSongs[i]));
+            }
+
+
+            uploadFiles(frmData);
+
         } else {
             window.alert('nok');
         }
     });
 });
 
+
+
+function updateMetadatas(selector, incompleteDatas) {
+    var newMetas = [];
+
+    $(selector).each(function (i) {
+        newMetas.push($(this).val());
+    });
+
+    for (var i = 0; i < incompleteDatas.length; i++) {
+
+        var keys = Object.keys(incompleteDatas[i]);
+
+        for (var y = 0; y < keys.length; y++) {
+            var newValue = newMetas[i + y];
+            incompleteDatas[i][keys[y]] = newValue;
+        }
+
+    }
+    return incompleteDatas;
+}
+
+function retrieveDatas(selector) {
+
+}
+
+/**
+ * adds a bootstrap error highlight if the input is empty
+ * @param {type} selector
+ * @returns {Boolean}
+ */
 function detectEmptyInputs(selector) {
     var flag = true;
     $(selector).each(function (i) {
+        var formGroup = $(this).parent().parent();
         if ($(this).val() === "") {
+            formGroup.addClass('has-error');
             flag = false;
-            return false;
-        }else{            
-            $(this).parent().parent().removeClass('has-error');
+        } else {
+
+            formGroup.removeClass('has-error');
         }
     });
     return flag;
@@ -40,9 +86,9 @@ function generateFormGroup(datas) {
     html += '<div class="row mt">';
     html += '<div class="col-lg-12">';
     $.each(datas, function (index, data) {
+        html += "<div class='file-separation'>"
         html += '<h4 class="mb"><i class="fa fa-angle-right"></i>File: ' + data.filename + '</h4>';
         $.each(data, function (index, value) {
-            console.log(index);
             if (index != 'filename') {
                 if (value == null) {
                     value = "";
@@ -60,6 +106,7 @@ function generateFormGroup(datas) {
             }
         });
         html += '<p>&nbsp</p>';
+        html += '</div>';
     });
     html += '<button type="button" id="validate" class="btn btn-theme btn-lg btn-block">Valider</button>';
     html += '</div>';

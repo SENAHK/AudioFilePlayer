@@ -14,6 +14,7 @@ $(function () {
 function initialize() {
     window.connectedUser = "";
     window.connectedUser = getUserSession();
+    window.incompleteSongs = [];
 }
 /**
  * Enum for routes
@@ -96,7 +97,11 @@ function render(url) {
         },
         '#upload': function () {
             if (connectedUser != "") {
-                jQuery.getScript("metadatasUpdate.js");
+                if (incompleteSongs.length > 0) {
+                    loadHtmlFile('views/modalUpdateMeta.html', '#app');
+                } else {
+                    gotoRoute(routesEnum.HOME);
+                }
             } else {
                 gotoRoute(routesEnum.LOGIN);
             }
