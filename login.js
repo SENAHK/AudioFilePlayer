@@ -1,8 +1,17 @@
+/*  
+ * Auteur	: Michael Ramusi
+ * Date         : 2017
+ * Projet	: AudioFilePlayer
+ * Copyright	: TPI 2017 - Michael RAMUSI
+ * Fichier	: login.js
+ * Fonction	: Gestion des fonctions de login ET d'inscription
+ */
 $(function () {
     if (connectedUser != "") {
         gotoRoute(routesEnum.HOME);
     }
-// Login
+    
+    // Login
     $('#login').submit(function (e) {
         e.preventDefault();
         var user = $('#user').val();

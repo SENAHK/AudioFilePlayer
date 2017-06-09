@@ -1,7 +1,16 @@
+/* 
+ 
+ * Auteur	: Michael Ramusi
+ * Date         : 8 juin 2017 
+ * Projet	: AudioFilePlayer
+ * Copyright	: TPI 2017 - Michael RAMUSI
+ * Fichier	: routes.js
+ * Fonction	: Gestion du routage des différentes pages du site
+ */
 initialize();
 // Document is ready
 $(function () {
-    jQuery.ajaxSetup({cache: false});
+    //jQuery.ajaxSetup({cache: false});
 
     // Listen to query hash change
     // in order to be able to go to the right part of the app
@@ -56,6 +65,7 @@ function render(url) {
     // Get the "anchor"  from the url.
     var anchor = url.split('/')[0];
     if (anchor === "") {
+        console.log('sasageyo');
         anchor = "#home";
     }
 

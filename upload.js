@@ -1,3 +1,14 @@
+/* 
+ 
+ * Auteur	: Michael Ramusi
+ * Date         : 2017 
+ * Projet	: AudioFilePlayer
+ * Copyright	: TPI 2017 - Michael RAMUSI
+ * Fichier	: upload.js
+ * Fonction	: Gère l'envoi au serveur des fichiers .mp3 déposés par l'utilisateur
+ 
+ */
+
 var jsmediatags = window.jsmediatags;
 var songNames = [];
 var songTags = {};
@@ -8,6 +19,7 @@ $(function () {
     $('#logout').click(function () {
         connectedUser = "";
     });
+    
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
         songNames = [];
@@ -27,9 +39,7 @@ $(function () {
                     console.log(error);
                 }
             });
-
         }
-        console.log(uploadedSongs);
     });
 
     $('#formUpload').submit(function (e) {
@@ -74,7 +84,6 @@ function uploadFiles(fileInput, filesArray, id3Array) {
         url: './http/uploadFiles.php',
         data: frmData,
         type: 'post',
-        async: false,
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
         processData: false,
         success: function (response) {
