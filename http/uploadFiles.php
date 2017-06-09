@@ -67,7 +67,7 @@ function moveFiles($directories) {
     }
 }
 
-echo "end";
+echo true;
 
 
 

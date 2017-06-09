@@ -18,17 +18,6 @@ $(function () {
         if (detectEmptyInputs("input[type=text]")) {
             window.alert('ok');
             var uploadedSongs = updateMetadatas('input[type=text]', incompleteSongs);
-            
-            var fileInput = $('#inputFile')[0];
-            var frmData = new FormData();
-
-            for (var i = 0; i < fileInput.files.length; i++) {
-                frmData.append('files[]', fileInput.files[i]);
-                frmData.append('id3[]', JSON.stringify(uploadedSongs[i]));
-            }
-
-
-            uploadFiles(frmData);
 
         } else {
             window.alert('nok');

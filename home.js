@@ -4,7 +4,7 @@ var songNames = [];
 var songTags = {};
 $(function () {
 
-    $('#titleUser').html(connectedUser);
+    $('#titleUser').html(connectedUser.toUpperCase());
 
     $('#logout').click(function () {
         connectedUser = "";
@@ -42,15 +42,7 @@ $(function () {
             window.incompleteSongs = incompleteFiles;
             gotoRoute(routesEnum.UPLOAD);
         } else {
-            var fileInput = $('#inputFile')[0];
-            var frmData = new FormData();
-
-            for (var i = 0; i < fileInput.files.length; i++) {
-                frmData.append('files[]', fileInput.files[i]);
-                frmData.append('id3[]', JSON.stringify(uploadedSongs[i]));
-            }
-
-            //uploadFiles(frmData);
+            uploadFiles('#inputFile', 'files[]', 'id3[]');
         }
     });
 });
@@ -69,25 +61,30 @@ function getIncompleteFiles(files) {
     return incompleteFiles;
 }
 
+function uploadFiles(fileInput, filesArray, id3Array) {
+    fileInput = $(fileInput)[0];
+    var frmData = new FormData();
 
+    for (var i = 0; i < fileInput.files.length; i++) {
+        frmData.append(filesArray, fileInput.files[i]);
+        frmData.append(id3Array, JSON.stringify(uploadedSongs[i]));
+    }
 
-
-function uploadFiles(form) {
     $.ajax({
         url: './http/uploadFiles.php',
-        data: form,
+        data: frmData,
         type: 'post',
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
         processData: false,
         success: function (response) {
-            response = $.parseJSON(response);
             console.log(response);
-            //alert(response);
+            response = JSON.stringify(response);
         }, error: function (jqXHR, textStatus, errorThrown) {
             alert('error');
         }
     });
 }
+
 
 function mergeArray(songs, names) {
     for (var i = 0; i < names.length; i++) {
