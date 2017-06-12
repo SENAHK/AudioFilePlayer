@@ -25,7 +25,8 @@ $(function () {
     }
 
     $('#list-tiles').on('click', 'button', function (event) {
-        alert($(this).data('idalbum'));
+        var id = $(this).data('idalbum');
+        gotoRoute(routesEnum.SINGLE_ALBUM, id);
     });
 });
 
