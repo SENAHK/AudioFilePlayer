@@ -1,5 +1,6 @@
 <?php
-/* 
+
+/*
 
  * Auteur	: Michael Ramusi
  * Date         : 12 juin 2017 
@@ -10,13 +11,11 @@
  */
 session_start();
 require './database_functions.php';
-if (isset($_POST['getArtistesInfos'])) {
-    if ($_POST['getArtistesInfos']) {
-        $infos = getArtistesInfos($_SESSION['idUser']);
-        echo json_encode($infos);
-    }else{
-        echo false;
-    }
-}else{
+$idArtist = filter_input(INPUT_POST, 'getAlbumsOfArtist', FILTER_SANITIZE_STRING);
+
+if (is_numeric($idArtist)) {
+    $infos = getAlbumsOfArtist($idArtist, $_SESSION['idUser']);
+    echo json_encode($infos);
+} else {
     echo false;
 }

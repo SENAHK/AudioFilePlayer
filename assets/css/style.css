@@ -1316,8 +1316,8 @@ PANELS CONFIGURATIONS
 }
 
 /* Soptify Panel */
-#spotify {
-	background: url(../img/lorde.jpg) no-repeat center top;
+.album-tile {
+	background: url(../img/profile-02.jpg) no-repeat center top;
 	margin-top: -15px;
 	background-attachment: relative;
 	background-position: center center;
@@ -1332,22 +1332,22 @@ PANELS CONFIGURATIONS
     -o-background-size: cover;
     background-size: cover;
 }
-#spotify .btn-clear-g {
+.album-tile  .btn-clear-g {
 	top: 15%;
 	right: 10px;
 	position: absolute;
 	margin-top: 5px;
 }
-#spotify .sp-title {
+.album-tile  .sp-title {
 	bottom: 15%;
 	left: 25px;
 	position: absolute;
 	color: #efefef;
 }
-#spotify .sp-title h3 {
+.album-tile  .sp-title h3 {
 	font-weight: 900;
 }
-#spotify .play{
+.album-tile  .play{
 	bottom: 18%;
 	right: 25px;
 	position: absolute;
@@ -2242,4 +2242,6 @@ label {
 a:hover{
     cursor: pointer;
 }
-
+.artist-tile:hover{
+    cursor: pointer;
+}

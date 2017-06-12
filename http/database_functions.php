@@ -177,6 +177,51 @@ function insertNewSong($artist, $album, $song, $idUser) {
     }
 }
 
-function getArtistesInfos($idUser){
-    
+function getArtistesInfos($idUser) {
+    try {
+        $query = "
+                SELECT  a.nomArtiste, a.idArtiste, COUNT(*) nbAlbums
+                FROM    artistes a
+                        INNER JOIN avoir b
+                            ON a.idArtiste = b.idArtiste
+                        INNER JOIN albums c
+                            ON b.idAlbum = c.idAlbum
+                        INNER JOIN
+                        (
+                            SELECT  idAlbum
+                            FROM    albums
+                            natural join titres
+                            natural join utilisateurs
+                            WHERE idUtilisateur = :idUser
+                            GROUP   BY idAlbum
+                        ) d ON c.idAlbum = d.idAlbum
+                GROUP   BY a.nomArtiste
+                ORDER BY a.nomArtiste";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idUser", $idUser);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        return false;
+    }
+}
+
+function getAlbumsOfArtist($idArtist, $idUser) {
+    try {
+        $query = "SELECT a.nomAlbum, a.idAlbum, c.nomArtiste, count(t.idTitre) as nbTitres
+                  FROM albums a
+                  INNER JOIN avoir b ON a.idAlbum = b.idAlbum
+                  INNER JOIN artistes c ON b.idArtiste = c.idArtiste
+                  INNER JOIN titres t ON a.idAlbum = t.idAlbum
+                  WHERE t.idUtilisateur = :idUser
+                  AND c.idArtiste = :idArtist
+                  GROUP BY a.nomAlbum";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(':idArtist', $idArtist);
+        $statement->bindParam(':idUser', $idUser);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        return false;
+    }
 }

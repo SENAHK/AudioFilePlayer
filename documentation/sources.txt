@@ -4,3 +4,4 @@ https://stackoverflow.com/questions/7306669/how-to-get-all-properties-values-of-
 https://api.jquerymobile.com/hashchange/
 http://api.jquery.com/on/#direct-and-delegated-events
 https://learn.jquery.com/events/event-delegation/
+https://stackoverflow.com/questions/14499558/counting-many-to-many-association-records

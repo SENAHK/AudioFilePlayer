@@ -30,8 +30,7 @@ $(function () {
                     songTags = {
                         title: tag.tags.title,
                         artist: tag.tags.artist,
-                        album: tag.tags.album,
-                        year: tag.tags.year
+                        album: tag.tags.album
                     };
                     uploadedSongs.push(songTags);
                 },

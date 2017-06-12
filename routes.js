@@ -15,7 +15,6 @@ $(function () {
     // Listen to query hash change
     // in order to be able to go to the right part of the app
     $(window).on('hashchange', function () {
-        console.log('hash has changed');
         render(decodeURI(window.location.hash));
     });
     render(decodeURI(window.location.hash));
@@ -65,7 +64,6 @@ function render(url) {
     // Get the "anchor"  from the url.
     var anchor = url.split('/')[0];
     if (anchor === "") {
-        console.log('sasageyo');
         anchor = "#home";
     }
 
@@ -77,8 +75,10 @@ function render(url) {
                 $('#login-page').remove();
                 $('#indexBody').show('slow');
 
+                setActiveLink('');
                 $('#app').html('');
                 loadHtmlFile('views/upload.html', '#app');
+                $('.sub').css('display', 'none');
             } else {
                 // Go to the login/register page
                 gotoRoute(routesEnum.LOGIN);
@@ -86,12 +86,21 @@ function render(url) {
         },
         '#artistes': function () {
             if (connectedUser != "") {
-                setActiveLink('artistes');
                 $('#app').html('');
-                loadHtmlFile('views/artistes.html', '#app');
+                loadHtmlFile('views/artists.html', '#app');
+                setActiveLink('audiothèque');
             } else {
                 // Go to the login/register page
                 gotoRoute(routesEnum.LOGIN);
+            }
+        },
+        '#artiste': function () {
+            if (connectedUser != "") {
+                $('#app').html('');
+                setActiveLink('artistes');
+                loadHtmlFile('views/single_artist.html', '#app');
+            } else {
+                gotoRoute(routesEnum.HOME);
             }
         },
         '#playlists': function () {
