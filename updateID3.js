@@ -4,33 +4,36 @@
  * Date         : 8 juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: metadatasUpdate.js
+ * Fichier	: updateID3.js
  * Fonction	: Gère la modification des métadonnées par le biais du formulaire
  *                affiché sur modalUpdateMeta.html
  
  */
 
-
 $(function () {
     $('#modal-meta-validation').modal('show');
-    
-    $('#btnModal').click(function () {
-        $('#app').append(generateFormGroup(incompleteSongs));
+
+    // When the modal is closed
+    $("#modal-meta-validation").on("hidden.bs.modal", function () {
+        // Generate the html used to update the id3 metadatas
+        $('#modal-update').append(generateFormGroup(incompleteSongs));
         $('#app').hide();
         $('#app').show('slow');
     });
     
-    $('#btnUpload').click(function () {
-        if (location.hash == "#upload") {
+    $('#btnUpload').click(function (event) {
+        if (location.hash == "#upload/") {
             alert("Veuillez d'abord envoyer les fichiers en cours de dépot");
         }
     });
-    
-    $('#validate').click(function () {
+
+    $('#modal-update').on('click', 'button', function (event) {
+        console.log('mouais');
+        console.log(detectEmptyInputs("input[type=text]"));
         if (detectEmptyInputs("input[type=text]")) {
             uploadedSongs = updateMetadatas('input[type=text]', incompleteSongs);
             uploadFiles('#inputFile', 'files[]', 'id3[]');
-            window.alert('Fichiers déposés');
+            gotoRoute(routesEnum.HOME);
         } else {
             window.alert('Des champs sont vides');
         }

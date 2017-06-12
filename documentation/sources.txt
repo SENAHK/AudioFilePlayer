@@ -2,3 +2,5 @@ https://stackoverflow.com/questions/2647867/how-to-determine-if-variable-is-unde
 https://learn.jquery.com/using-jquery-core/iterating/
 https://stackoverflow.com/questions/7306669/how-to-get-all-properties-values-of-a-javascript-object-without-knowing-the-key
 https://api.jquerymobile.com/hashchange/
+http://api.jquery.com/on/#direct-and-delegated-events
+https://learn.jquery.com/events/event-delegation/

@@ -19,7 +19,7 @@ $(function () {
     $('#logout').click(function () {
         connectedUser = "";
     });
-    
+
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
         songNames = [];

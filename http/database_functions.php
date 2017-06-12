@@ -176,3 +176,7 @@ function insertNewSong($artist, $album, $song, $idUser) {
         return false;
     }
 }
+
+function getArtistesInfos($idUser){
+    
+}

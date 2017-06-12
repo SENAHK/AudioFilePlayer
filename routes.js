@@ -10,7 +10,7 @@
 initialize();
 // Document is ready
 $(function () {
-    //jQuery.ajaxSetup({cache: false});
+    jQuery.ajaxSetup({cache: false});
 
     // Listen to query hash change
     // in order to be able to go to the right part of the app
@@ -87,6 +87,8 @@ function render(url) {
         '#artistes': function () {
             if (connectedUser != "") {
                 setActiveLink('artistes');
+                $('#app').html('');
+                loadHtmlFile('views/artistes.html', '#app');
             } else {
                 // Go to the login/register page
                 gotoRoute(routesEnum.LOGIN);
