@@ -23,6 +23,8 @@ $(function () {
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
         songNames = [];
+        songTags = {};
+        console.log(e.target.files.length);
         for (var i = 0; i < e.target.files.length; i++) {
             songNames.push({filename: e.target.files[i].name});
             jsmediatags.read(e.target.files[i], {
@@ -43,42 +45,45 @@ $(function () {
 
     $('#formUpload').submit(function (e) {
         e.preventDefault();
+        console.log(uploadedSongs);
         mergeArray(uploadedSongs, songNames);
-
+        console.log(uploadedSongs);
         var incompleteFiles = getIncompleteFiles(uploadedSongs);
         // Si des fichiers sont incomplets
-        console.log(incompleteFiles.length);
         if (incompleteFiles.length > 0) {
             window.incompleteSongs = incompleteFiles;
             gotoRoute(routesEnum.UPLOAD);
         } else {
-            uploadFiles('#inputFile', 'files[]', 'id3[]');
+            uploadFiles('#inputFile', uploadedSongs);
         }
     });
 });
 
 function getIncompleteFiles(files) {
     var incompleteFiles = [];
-
     $.each(files, function (index, file) {
-        $.each(file, function (index, value) {
+        $.each(file, function (ind, value) {
             if (value == null) {
                 incompleteFiles.push(file);
+                files.splice(index, 1);
                 return false;
             }
         });
     });
+    console.log(uploadedSongs);
     return incompleteFiles;
 }
 
-function uploadFiles(fileInput, filesArray, id3Array) {
+function uploadFiles(fileInput, id3Array) {
     fileInput = $(fileInput)[0];
     var frmData = new FormData();
 
     for (var i = 0; i < fileInput.files.length; i++) {
-        frmData.append(filesArray, fileInput.files[i]);
-        frmData.append(id3Array, JSON.stringify(uploadedSongs[i]));
+        frmData.append('files[]', fileInput.files[i]);
+        frmData.append('id3[]', JSON.stringify(id3Array[i]));
     }
+
+
     $.ajax({
         url: './http/uploadFiles.php',
         data: frmData,
@@ -98,7 +103,12 @@ function uploadFiles(fileInput, filesArray, id3Array) {
     });
 }
 
-
+/**
+ * merge two arrays
+ * @param {type} songs
+ * @param {type} names
+ * @returns {undefined}
+ */
 function mergeArray(songs, names) {
     for (var i = 0; i < names.length; i++) {
         $.extend(songs[i], names[i]);

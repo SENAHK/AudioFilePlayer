@@ -20,7 +20,7 @@ $(function () {
         $('#app').hide();
         $('#app').show('slow');
     });
-    
+
     $('#btnUpload').click(function (event) {
         if (location.hash == "#upload/") {
             alert("Veuillez d'abord envoyer les fichiers en cours de dépot");
@@ -28,12 +28,13 @@ $(function () {
     });
 
     $('#modal-update').on('click', 'button', function (event) {
-        console.log('mouais');
-        console.log(detectEmptyInputs("input[type=text]"));
         if (detectEmptyInputs("input[type=text]")) {
-            uploadedSongs = updateMetadatas('input[type=text]', incompleteSongs);
-            uploadFiles('#inputFile', 'files[]', 'id3[]');
-            gotoRoute(routesEnum.HOME);
+            var updatedSongs = updateMetadatas('input[type=text]', incompleteSongs);
+            console.log(updatedSongs);
+                        console.log(uploadedSongs);
+//console.log(updatedSongs.concat(uploadedSongs))
+            //uploadFiles('#inputFile', updatedSongs.concat(uploadedSongs));
+            //gotoRoute(routesEnum.HOME);
         } else {
             window.alert('Des champs sont vides');
         }
@@ -48,22 +49,18 @@ function updateMetadatas(selector, incompleteDatas) {
     $(selector).each(function (i) {
         newMetas.push($(this).val());
     });
-
+    var cpt = 0;
     for (var i = 0; i < incompleteDatas.length; i++) {
 
         var keys = Object.keys(incompleteDatas[i]);
 
-        for (var y = 0; y < keys.length; y++) {
-            var newValue = newMetas[i + y];
+        for (var y = 0; y < keys.length - 1; y++) {
+            var newValue = newMetas[cpt];
             incompleteDatas[i][keys[y]] = newValue;
+            cpt++;
         }
-
     }
     return incompleteDatas;
-}
-
-function retrieveDatas(selector) {
-
 }
 
 /**
@@ -79,7 +76,6 @@ function detectEmptyInputs(selector) {
             formGroup.addClass('has-error');
             flag = false;
         } else {
-
             formGroup.removeClass('has-error');
         }
     });
@@ -90,7 +86,6 @@ function generateFormGroup(datas) {
     html += '<div class="row mt">';
     html += '<div class="col-lg-12">';
     $.each(datas, function (index, data) {
-        console.log(data);
         html += "<div class='file-separation'>"
         html += '<h4 class="mb"><i class="fa fa-angle-right"></i>File: ' + data.filename + '</h4>';
         $.each(data, function (index, value) {
