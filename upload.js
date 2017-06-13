@@ -86,10 +86,14 @@ function uploadFiles(fileInput, filesArray, id3Array) {
         contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
         processData: false,
         success: function (response) {
-            response = JSON.stringify(response);
-            alert('Dépôt réussi');
+            if (!response) {
+                alert('Upload failed. Try again or contact administrator.')
+            } else {
+                $(fileInput).val('');
+                alert('Upload succeed');
+            }
         }, error: function (jqXHR, textStatus, errorThrown) {
-            alert('error');
+            alert('Connection to the server failed, contact administrator.');
         }
     });
 }

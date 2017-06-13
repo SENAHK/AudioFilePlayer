@@ -11,7 +11,7 @@
  */
 session_start();
 require './database_functions.php';
-$idArtist = filter_input(INPUT_POST, 'getAlbumsOfArtist', FILTER_SANITIZE_STRING);
+$idArtist = filter_input(INPUT_POST, 'getAlbumsOfArtist', FILTER_VALIDATE_INT);
 
 if (is_numeric($idArtist)) {
     $infos = getAlbumsOfArtist($idArtist, $_SESSION['idUser']);

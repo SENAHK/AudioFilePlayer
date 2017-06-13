@@ -53,7 +53,7 @@ function usernameExists($user) {
 
 function insertUser($username, $password) {
     $query = "INSERT INTO utilisateurs "
-            . "VALUES('',:user, :pass)";
+            . "VALUES(null,:user, :pass)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":user", $username, PDO::PARAM_STR);
     $statement->bindParam(":pass", $password, PDO::PARAM_STR);
@@ -80,7 +80,7 @@ function artistExists($nameArtist) {
 }
 
 function insertArtist($nameArtist) {
-    $query = "INSERT INTO artistes VALUES('', :artistName)";
+    $query = "INSERT INTO artistes VALUES(null, :artistName)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":artistName", $nameArtist, PDO::PARAM_STR);
     $statement->execute();
@@ -88,7 +88,7 @@ function insertArtist($nameArtist) {
 }
 
 function insertAlbum($nameAlbum) {
-    $query = "INSERT INTO albums VALUES('', :albumName)";
+    $query = "INSERT INTO albums VALUES(null, :albumName)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":albumName", $nameAlbum, PDO::PARAM_STR);
     $statement->execute();
@@ -115,7 +115,7 @@ function manyToManyAvoirExists($idArtist, $idAlbum) {
 }
 
 function insertTitle($nameTitle, $idAlbum, $idUser) {
-    $query = "INSERT INTO titres VALUES('', :titleName, :albumId, :userId)";
+    $query = "INSERT INTO titres VALUES(null, :titleName, :albumId, :userId)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":titleName", $nameTitle, PDO::PARAM_STR);
     $statement->bindParam(":albumId", $idAlbum, PDO::PARAM_INT);

@@ -23,17 +23,18 @@ foreach ($id3_datas as $title_datas) {
     //$year = $title_datas["year"];
 
     try {
-        $songsAreInserted = true;
         $songsAreInserted = insertNewSong($artist, $album, $title, $idUser);
     } catch (Exception $ex) {
-        echo $ex->getMessage();
+        //echo $ex->getMessage();
+        echo false;
     }
 }
 if ($songsAreInserted) {
     $directories = createFolders($idUser, $id3_datas);
     moveFiles($directories);
-    print_r($_FILES['files']);
-    print_r($id3_datas);
+    echo true;
+} else {
+    echo false;
 }
 
 function createFolders($idUser, $songDatas) {
@@ -67,7 +68,6 @@ function moveFiles($directories) {
     }
 }
 
-echo true;
 
 
 

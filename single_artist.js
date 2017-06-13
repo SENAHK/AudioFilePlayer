@@ -5,14 +5,14 @@
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: single_artists
- * Fonction	:
+ * Fonction	: Gestion de l'affichage des albums liés à un artiste
  
  */
 
 
 $(function () {
     var idArtist = location.hash.split('#artiste/')[1].trim();
-    infos = getAlbumsOfArtist(idArtist);
+    var infos = getAlbumsOfArtist(idArtist);
 
     if (!infos) {
         alert('Connection error with the db.')
