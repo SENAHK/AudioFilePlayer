@@ -20,6 +20,7 @@ $(function () {
     render(decodeURI(window.location.hash));
 });
 function initialize() {
+    window.audioPlayer = new Player($('#ad')[0]);
     window.connectedUser = "";
     window.connectedUser = getUserSession();
     window.incompleteSongs = [];

@@ -12,19 +12,55 @@
 $(function () {
     var tracks = false;
     var idAlbum = location.hash.split('#album/')[1].trim();
-    
-    if (isInteger(idAlbum)) {        
+    if (isInteger(idAlbum)) {
+
         tracks = getTracks(idAlbum);
         console.log(tracks);
-        
-        //generateTable(tracks);
+
+        var tBody = generateTBody(tracks);
+        $('#tBody-single-album').html(tBody);
+        $('#single_album h4').append(tracks[0].nomAlbum);
+
+
+
+
+        $('#single_album').on('click', 'tr', function (event) {
+            window.audioPlayer.Init(tracks);
+            var id = $(this).data('id');
+            window.audioPlayer.SetPos(id);
+            window.audioPlayer.Play();
+        });
+//
+//        $(window.audioPlayer.audio).on("ended", function () {
+//            window.audioPlayer.Next();
+//        });
+
+
+
+
+
+
     }
-
-
-
-
 });
 
+function generateTBody(tracks) {
+    var nomArtiste, idTitre, nomTitre, fichierTitre, html = "";
+
+    for (var i = 0, max = tracks.length; i < max; i++) {
+        nomArtiste = tracks[i].nomArtiste;
+        idTitre = tracks[i].idTitre;
+        nomTitre = tracks[i].nomTitre;
+        fichierTitre = tracks[i].fichierTitre;
+
+        html += '<tr data-id="' + i + '">';
+        html += "<td>" + (i + 1) + "</td>";
+        html += '<td>' + nomTitre + '</td>';
+        html += '<td>' + nomArtiste + '</td>';
+        html += "</tr>";
+
+    }
+    return html;
+}
 
 
 function isInteger(str) {

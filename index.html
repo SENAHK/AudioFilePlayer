@@ -23,7 +23,7 @@
 
     </head>
     <body>
-        <div id="indexBody">
+        <div id="indexBody">            
             <input type="hidden" id="sessionUser" value="">
 
             <section id="container" >
@@ -135,6 +135,46 @@
 
                 <!--main content end-->
             </section>
+            <footer class="site-footer navbar-fixed-bottom">
+                <div class="col-lg-1 log" style="color: black;">
+                    <i id="button-previous" class="fa fa-backward" ></i>
+                </div>
+
+                <audio class="col-lg-10" id="ad" controls></audio>
+                <div class="col-lg-1 log" style="color: black;">
+                    <i id="button-next" class="fa fa-forward" ></i>
+                </div>
+                <!--                    <button type='button' class='btn btn-round btn-theme'>
+                                        <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                                    </button>-->
+
+                <!--                    <div class="row">
+                                        <div class="col-lg-4"></div>
+                                        <button type="button" id="button-previous" class="btn btn-primary">
+                                            <i class="fa fa-backward"></i>
+                                        </button>
+                
+                                        <button type="button" id="button-play" class="btn btn-primary" >
+                                            <i class="fa fa-play"></i>
+                                        </button>
+                
+                
+                                        <button type="button" id="button-next" class="btn btn-primary" >
+                                            <i class="fa fa-forward"></i>
+                                        </button>
+                                        <div class="col-xs-1">
+                                            <input id="volume"
+                                                   type="range"
+                                                   min="0"                    
+                                                   max="100"                
+                                                   step="10"                   
+                                                   value="50"                
+                                                   data-orientation="horizontal" 
+                                                   >
+                                        </div>
+                
+                                    </div>-->
+            </footer>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -146,6 +186,8 @@
         <!--common script for all pages-->
         <script src="assets/js/common-scripts.js"></script> 
         <script src="./assets/js/jsmediatags.js"></script>
+        <script src="audioControls.js"></script>
+        <script src="Player.js"></script>
         <script src="routes.js"></script>
         <script src="upload.js"></script>
     </body>

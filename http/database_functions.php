@@ -230,7 +230,7 @@ function getAlbumsOfArtist($idArtist, $idUser) {
 
 function getTracksOfAlbum($idAlbum, $idUser) {
     try {
-        $query = "SELECT `idTitre`, `nomTitre`, `fichierTitre` 
+        $query = "SELECT `idTitre`, `nomTitre`, `fichierTitre`, a.nomAlbum, art.nomArtiste, idUtilisateur 
                   FROM `titres` t
                   INNER JOIN albums a
                     ON t.idAlbum = a.idAlbum
