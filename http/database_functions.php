@@ -114,10 +114,12 @@ function manyToManyAvoirExists($idArtist, $idAlbum) {
     return $statement->fetchColumn();
 }
 
-function insertTitle($nameTitle, $idAlbum, $idUser) {
-    $query = "INSERT INTO titres VALUES(null, :titleName, :albumId, :userId)";
+function insertTitle($nameTitle, $idAlbum, $idUser, $nameFile) {
+
+    $query = "INSERT INTO titres VALUES(null, :titleName, :fileName, :albumId, :userId)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":titleName", $nameTitle, PDO::PARAM_STR);
+    $statement->bindParam(":fileName", $nameFile, PDO::PARAM_STR);
     $statement->bindParam(":albumId", $idAlbum, PDO::PARAM_INT);
     $statement->bindParam(":userId", $idUser, PDO::PARAM_INT);
     $statement->execute();
@@ -145,7 +147,7 @@ function titleExists($nameTitle, $idAlbum, $idUser) {
  * @param int $idUser id of the user
  * @return string
  */
-function insertNewSong($artist, $album, $song, $idUser) {
+function insertNewSong($artist, $album, $song, $idUser, $fileName) {
     try {
         $connection = getConnexion();
         $connection->beginTransaction();
@@ -167,7 +169,7 @@ function insertNewSong($artist, $album, $song, $idUser) {
         }
         // prevent duplicate entries
         if (!titleExists($song, $idAlbum, $idUser)) {
-            insertTitle($song, $idAlbum, $idUser);
+            insertTitle($song, $idAlbum, $idUser, $fileName);
         }
         $connection->commit();
         return true;
@@ -219,6 +221,28 @@ function getAlbumsOfArtist($idArtist, $idUser) {
         $statement = getConnexion()->prepare($query);
         $statement->bindParam(':idArtist', $idArtist);
         $statement->bindParam(':idUser', $idUser);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        return false;
+    }
+}
+
+function getTracksOfAlbum($idAlbum, $idUser) {
+    try {
+        $query = "SELECT `idTitre`, `nomTitre`, `fichierTitre` 
+                  FROM `titres` t
+                  INNER JOIN albums a
+                    ON t.idAlbum = a.idAlbum
+                  INNER JOIN avoir v
+                    on a.idAlbum = v.idAlbum
+                  INNER JOIN artistes art
+                    ON v.idArtiste = art.idArtiste
+                  WHERE idUtilisateur = :idUser
+                  AND t.idAlbum = :idAlbum";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idAlbum", $idAlbum);
+        $statement->bindParam(":idUser", $idUser);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {

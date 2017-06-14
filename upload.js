@@ -96,6 +96,7 @@ function uploadFiles(fileInput, id3Array) {
             } else {
                 $(fileInput).val('');
                 alert('Upload succeed');
+                gotoRoute(routesEnum.HOME);
             }
         }, error: function (jqXHR, textStatus, errorThrown) {
             alert('Connection to the server failed, contact administrator.');

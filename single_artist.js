@@ -11,8 +11,13 @@
 
 
 $(function () {
+    var infos = false;
     var idArtist = location.hash.split('#artiste/')[1].trim();
-    var infos = getAlbumsOfArtist(idArtist);
+
+    if (isInteger(idArtist)) {
+        infos = getAlbumsOfArtist(idArtist);
+    }
+
 
     if (!infos) {
         alert('Connection error with the db.')
@@ -29,6 +34,11 @@ $(function () {
         gotoRoute(routesEnum.SINGLE_ALBUM, id);
     });
 });
+
+function isInteger(str) {
+    var n = Math.floor(Number(str));
+    return String(n) === str && n >= 0;
+}
 
 function generateTileAlbum(nameAlbum, idAlbum, nbTitres) {
     var html = '<div class="col-lg-4 col-md-4 col-sm-4 mb">';

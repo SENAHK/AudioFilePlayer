@@ -13,7 +13,7 @@ session_start();
 require './database_functions.php';
 $idArtist = filter_input(INPUT_POST, 'getAlbumsOfArtist', FILTER_VALIDATE_INT);
 
-if (is_numeric($idArtist)) {
+if ($idArtist || $idArtist === 0) {
     $infos = getAlbumsOfArtist($idArtist, $_SESSION['idUser']);
     echo json_encode($infos);
 } else {

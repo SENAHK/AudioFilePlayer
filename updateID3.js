@@ -30,11 +30,8 @@ $(function () {
     $('#modal-update').on('click', 'button', function (event) {
         if (detectEmptyInputs("input[type=text]")) {
             var updatedSongs = updateMetadatas('input[type=text]', incompleteSongs);
-            console.log(updatedSongs);
-                        console.log(uploadedSongs);
-//console.log(updatedSongs.concat(uploadedSongs))
-            //uploadFiles('#inputFile', updatedSongs.concat(uploadedSongs));
-            //gotoRoute(routesEnum.HOME);
+            var mergedSongs = updatedSongs.concat(uploadedSongs);
+            uploadFiles('#inputFile', mergedSongs);
         } else {
             window.alert('Des champs sont vides');
         }

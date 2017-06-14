@@ -16,16 +16,19 @@ foreach ($id3 as $value) {
     array_push($id3_datas, json_decode($value, true));
 }
 foreach ($id3_datas as $title_datas) {
-    //print_r($title_datas);
+    print_r($title_datas);
+    
+    // TODO: filter/sanitize the var
     $title = $title_datas["title"];
     $artist = $title_datas["artist"];
     $album = $title_datas["album"];
+    $filename = $title_datas["filename"];
     //$year = $title_datas["year"];
 
     try {
-        $songsAreInserted = insertNewSong($artist, $album, $title, $idUser);
+        $songsAreInserted = insertNewSong($artist, $album, $title, $idUser, $filename);
     } catch (Exception $ex) {
-        //echo $ex->getMessage();
+        echo $ex->getMessage();
         echo false;
     }
 }

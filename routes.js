@@ -109,6 +109,13 @@ function render(url) {
         '#albums': function () {
             setActiveLink('albums');
         },
+        '#album': function () {
+            if (connectedUser != "") {
+                $('#app').html('');
+                loadHtmlFile('views/single_album.html', '#app');
+            }
+        }
+        ,
         '#login': function () {
             $('#indexBody').hide();
             loadHtmlFile('views/log.html', 'body');
