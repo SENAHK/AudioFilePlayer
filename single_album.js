@@ -21,15 +21,24 @@ $(function () {
         $('#tBody-single-album').html(tBody);
         $('#single_album h4').append(tracks[0].nomAlbum);
 
-
-
-
-        $('#single_album').on('click', 'tr', function (event) {
+        $('#single_album').on('click', '.play-song', function (event) {
             window.audioPlayer.Init(tracks);
             var id = $(this).data('id');
             window.audioPlayer.SetPos(id);
             window.audioPlayer.Play();
         });
+
+        $('#single_album').on('click', '.add-playlist', function (event) {
+            var id = $(this).data('id');
+            console.log(id);
+            gotoRoute(routesEnum.UPDATE_PLAYLIST, id);
+        });
+//        $('#single_album').on('click', 'tr', function (event) {
+//            window.audioPlayer.Init(tracks);
+//            var id = $(this).data('id');
+//            window.audioPlayer.SetPos(id);
+//            window.audioPlayer.Play();
+//        });
     }
 });
 
@@ -42,10 +51,13 @@ function generateTBody(tracks) {
         nomTitre = tracks[i].nomTitre;
         fichierTitre = tracks[i].fichierTitre;
 
-        html += '<tr data-id="' + i + '">';
+        html += '<tr>';
         html += "<td>" + (i + 1) + "</td>";
         html += '<td>' + nomTitre + '</td>';
         html += '<td>' + nomArtiste + '</td>';
+        html += '<td><button type="button" class="btn btn-theme03 add-playlist" data-id="'+ idTitre + '"><i class="fa fa-plus"></i> to playlist</button>';
+        html += "<span>   </span>";
+        html += '<button type="button" class="btn btn-theme03 play-song" data-id="' + i + '"><i class="fa fa-play"></i> Play</button></td>';
         html += "</tr>";
 
     }

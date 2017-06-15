@@ -44,7 +44,7 @@
                             <!-- settings start -->
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                                    <i class="fa fa-tasks"></i>
+                                    <i class="fa fa-upload"></i>
                                     <!--                                        <span class="badge bg-theme">4</span>-->
                                 </a>
 
@@ -63,6 +63,30 @@
                                             </div>
 
                                         </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                                    <i class="fa fa-list-ul"></i>
+                                    <!--                                        <span class="badge bg-theme">4</span>-->
+                                </a>
+
+                                <ul class="dropdown-menu extended tasks-bar">
+                                    <div class="notify-arrow notify-arrow-green"></div>
+                                    <li>
+                                        <p class="green">Create a new playlist</p>
+                                    </li>                            
+                                    <li>
+                                        <div class="form-group" style="padding: 5px 5px 5px 5px;">
+                                            <form id="playlist-frm">
+                                                <input id="playlist-input" type="text" class="form-control" required="" placeholder="Playlist name">
+                                                <br>
+                                                <div class="text-center">
+                                                    <button id="playlist-button" type="submit" class="btn">Create playlist</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </li>
                                 </ul>
                             </li>
@@ -174,9 +198,10 @@
         <!--common script for all pages-->
         <script src="assets/js/common-scripts.js"></script> 
         <script src="./assets/js/jsmediatags.js"></script>
-        <script src="audioControls.js"></script>
         <script src="Player.js"></script>
         <script src="routes.js"></script>
+        <script src="audioControls.js"></script>
         <script src="upload.js"></script>
+        <script src="createPlaylist.js"></script>
     </body>
 </html>

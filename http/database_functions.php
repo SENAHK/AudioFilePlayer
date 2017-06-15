@@ -259,7 +259,7 @@ function getPlaylists($idUser) {
                   INNER JOIN titres t
                         ON c.idTitre = t.idTitre
                   WHERE t.idUtilisateur = :idUser
-                  group by nomPlaylist";  
+                  group by nomPlaylist";
         $statement = getConnexion()->prepare($query);
         $statement->bindParam(":idUser", $idUser);
         $statement->execute();
@@ -270,9 +270,9 @@ function getPlaylists($idUser) {
     }
 }
 
-function getPlaylistTracks($idPlaylist, $idUser){
+function getPlaylistTracks($idPlaylist, $idUser) {
     try {
-    $query = "SELECT art.nomArtiste, t.nomTitre, t.idTitre, t.fichierTitre, p.nomPlaylist, t.idUtilisateur, a.nomAlbum
+        $query = "SELECT art.nomArtiste, t.nomTitre, t.idTitre, t.fichierTitre, p.nomPlaylist, t.idUtilisateur, a.nomAlbum
               FROM playlists p
               INNER JOIN composer c
                       ON p.idPlaylist = c.idPlaylist
@@ -286,13 +286,42 @@ function getPlaylistTracks($idPlaylist, $idUser){
                       ON av.idArtiste = art.idArtiste
               WHERE t.idUtilisateur = :idUser
               AND p.idPlaylist = :idPlaylist";
-    $statement = getConnexion()->prepare($query);
-    $statement->bindParam(":idUser", $idUser);
-    $statement->bindParam(":idPlaylist", $idPlaylist);
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idUser", $idUser);
+        $statement->bindParam(":idPlaylist", $idPlaylist);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
         echo $ex->getMessage();
+        return false;
+    }
+}
+
+function insertPlaylist($playlistName, $idUser) {
+    try {
+        $query = "INSERT INTO `playlists`(`nomPlaylist`, `idUtilisateur`) "
+                . "VALUES (:playlistName, :idUser)";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idUser", $idUser);
+        $statement->bindParam(":playlistName", $playlistName);
+        $statement->execute();
+        return $statement->fetchColumn();
+    } catch (Exception $ex) {
+        echo $ex->getMessage();
+        return false;
+    }
+}
+
+function updatePlaylist($idPlaylist, $idTrack) {
+    try {
+        $query = "INSERT INTO `composer`(`idTitre`, `idPlaylist`) "
+                . "VALUES (:idTrack, :idPlaylist)";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idPlaylist", $idPlaylist);
+        $statement->bindParam(":idTrack", $idTrack);
+        $statement->execute();
+        return $statement->fetchColumn();
+    } catch (Exception $ex) {
         return false;
     }
 }

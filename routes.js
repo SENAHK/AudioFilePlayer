@@ -39,8 +39,9 @@ var routesEnum = {
     LOGIN: 'login/',
     LOGOUT: 'logout/',
     UPLOAD: 'upload/',
-    PLAYLISTS : 'playlists/',
-    SINGLE_PLAYLIST: 'playlist/'
+    PLAYLISTS: 'playlists/',
+    SINGLE_PLAYLIST: 'playlist/',
+    UPDATE_PLAYLIST: 'updatePlaylist/'
 }
 
 /**
@@ -110,10 +111,13 @@ function render(url) {
             $('#app').html('');
             setActiveLink('playlists');
             loadHtmlFile('views/playlists.html', '#app');
-        },       
+        },
         '#playlist': function () {
             $('#app').html('');
-            loadHtmlFile('views/playlist.html', '#app');
+            loadHtmlFile('views/single_playlist.html', '#app');
+        },
+        '#updatePlaylist': function(){            
+            loadHtmlFile('views/modal_update_playlist.html', '#app');
         },
         '#albums': function () {
             setActiveLink('albums');
