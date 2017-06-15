@@ -7,7 +7,7 @@
  * Fonction	: Gestion des fonctions de login ET d'inscription
  */
 $(function () {
-    if (connectedUser != "") {
+    if (getUserSession() != "") {
         gotoRoute(routesEnum.HOME);
     }
     

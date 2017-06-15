@@ -6,7 +6,7 @@
 // * Copyright	: TPI 2017 - Michael RAMUSI
 // * Fichier	: Player
 // * Fonction	:
-// 
+//
 // */
 //
 "use strict";
@@ -26,7 +26,7 @@ class Player{
        else{
             this.SetPos(0);
         }
-        this.Play();
+        this.audio.play();
     }
     
     Init(songArray){

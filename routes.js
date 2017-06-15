@@ -20,7 +20,7 @@ $(function () {
     render(decodeURI(window.location.hash));
 });
 function initialize() {
-    window.audioPlayer = new Player($('#ad')[0]);
+    window.audioPlayer = new Player(document.createElement('audio'));
     window.connectedUser = "";
     window.connectedUser = getUserSession();
     window.incompleteSongs = [];
@@ -72,7 +72,7 @@ function render(url) {
     var routes = {
         '#home': function () {
             // If the user is connected
-            if (connectedUser != "") {
+            if (getUserSession() != "") {
                 $('#login-page').remove();
                 $('#indexBody').show('slow');
 
@@ -86,17 +86,17 @@ function render(url) {
             }
         },
         '#artistes': function () {
-            if (connectedUser != "") {
+            if (getUserSession() != "") {
                 $('#app').html('');
                 loadHtmlFile('views/artists.html', '#app');
-                setActiveLink('audiothèque');
+                setActiveLink('artistes');
             } else {
                 // Go to the login/register page
                 gotoRoute(routesEnum.LOGIN);
             }
         },
         '#artiste': function () {
-            if (connectedUser != "") {
+            if (getUserSession() != "") {
                 $('#app').html('');
                 setActiveLink('artistes');
                 loadHtmlFile('views/single_artist.html', '#app');
@@ -111,7 +111,7 @@ function render(url) {
             setActiveLink('albums');
         },
         '#album': function () {
-            if (connectedUser != "") {
+            if (getUserSession() != "") {
                 $('#app').html('');
                 loadHtmlFile('views/single_album.html', '#app');
             }
@@ -126,7 +126,7 @@ function render(url) {
             gotoRoute(routesEnum.LOGIN);
         },
         '#upload': function () {
-            if (connectedUser != "") {
+            if (getUserSession() != "") {
                 if (incompleteSongs.length > 0) {
                     loadHtmlFile('views/modalUpdateMeta.html', '#app');
                 } else {

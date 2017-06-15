@@ -11,35 +11,65 @@
 
 
 $(function () {
-//    $('#volume').val(audioPlayer.audio.volume * 100)
-//    $('#volume').change(function () {
-//        var vol = this.value;
-//        console.log(vol);
-//        audioPlayer.audio.volume = vol / 100;
-//    });
-    $('#button-previous').bind('click', function () {
+
+    var music = window.audioPlayer.audio; // id for audio element
+    var readButton = $('#btn-play'); // play button
+    var playhead = $('#playhead'); // playhead
+    var timeline = $('#timeline'); // timeline
+
+    var timelineWidth = timeline.width() - playhead.width();
+    $('#btn-previous').on('click', function () {
         if (audioPlayer.songs.length > 0) {
             audioPlayer.Previous();
         }
     });
 
-    $('#button-next').bind('click', function () {
+    $('#volume').val(audioPlayer.audio.volume * 100);
+    $('#volume').change(function () {
+        var vol = this.value;
+        console.log(vol);
+        audioPlayer.audio.volume = vol / 100;
+    });
+
+    $('#btn-next').on('click', function () {
         if (audioPlayer.songs.length > 0) {
             audioPlayer.Next();
         }
     });
 
-//    $('#button-play').click(function () {
-//        if (audioPlayer.songs.length > 0) {
-//            if (audioPlayer.audio.paused) {
-//                audioPlayer.Play();
-//                console.log($(this).children());
-//                $(this).children().removeClass().addClass('fa fa-play');
-//            } else {
-//                audioPlayer.Pause();
-//                $(this).children().removeClass().addClass('fa fa-pause');
-//            }
-//        }
-//
-//    });
+
+    readButton.on('click', function () {
+        // start music
+        if (music.paused) {
+            music.play();
+            $('#total-time').html(music.duration);
+            // remove play, add pause
+            readButton.removeClass().addClass("pause");
+        } else { // pause music
+            music.pause();
+            readButton.removeClass().addClass("play");
+        }
+    });
+
+    $(music).bind('timeupdate', function () {
+        if (!music.paused) {
+            $('#audio-controls').show();
+        }
+        $('#total-time').html(secondsToMinutes(music.duration));
+        $('#actual-time').html(secondsToMinutes(music.currentTime));
+
+        var playPercent = timelineWidth * (music.currentTime / music.duration);
+        playhead.css("margin-left", playPercent);
+        if (music.currentTime == music.duration) {
+            readButton.removeClass().addClass("play");
+        }
+    })
 });
+
+function secondsToMinutes(time) {
+    var mins = Math.floor(time / 60);
+    var secs = Math.floor(time % 60);
+
+    return mins + ':' + (secs < 10 ? "0" + secs : secs);
+}
+
