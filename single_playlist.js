@@ -31,7 +31,7 @@ $(function () {
 
 
 
-    table.on('click', 'tr', function (event) {
+    table.on('click', 'button', function (event) {
         window.audioPlayer.Init(tracks);
         var id = $(this).data('id');
         window.audioPlayer.SetPos(id);
@@ -57,6 +57,8 @@ function generateTBodyPlaylist(playlist) {
         html += "<td>" + (i + 1) + "</td>";
         html += '<td>' + nomTitre + '</td>';
         html += '<td>' + nomArtiste + '</td>';
+        html += '<td><button type="button" class="btn btn-theme03 play-song" data-id="' + i + '"><i class="fa fa-play"></i> Play</button></td>';
+
         html += "</tr>";
 
     }

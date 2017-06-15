@@ -270,6 +270,20 @@ function getPlaylists($idUser) {
     }
 }
 
+function getPlaylistsWithoutCount($idUser) {
+    try {
+        $query = "SELECT * "
+                . "FROM `playlists` WHERE `idUtilisateur` = :idUser";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idUser", $idUser);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        echo $ex->getMessage();
+        return false;
+    }
+}
+
 function getPlaylistTracks($idPlaylist, $idUser) {
     try {
         $query = "SELECT art.nomArtiste, t.nomTitre, t.idTitre, t.fichierTitre, p.nomPlaylist, t.idUtilisateur, a.nomAlbum
@@ -305,7 +319,7 @@ function insertPlaylist($playlistName, $idUser) {
         $statement->bindParam(":idUser", $idUser);
         $statement->bindParam(":playlistName", $playlistName);
         $statement->execute();
-        return $statement->fetchColumn();
+        return true;
     } catch (Exception $ex) {
         echo $ex->getMessage();
         return false;
@@ -320,7 +334,7 @@ function updatePlaylist($idPlaylist, $idTrack) {
         $statement->bindParam(":idPlaylist", $idPlaylist);
         $statement->bindParam(":idTrack", $idTrack);
         $statement->execute();
-        return $statement->fetchColumn();
+        return true;
     } catch (Exception $ex) {
         return false;
     }

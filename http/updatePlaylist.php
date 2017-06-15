@@ -17,7 +17,7 @@ $idTrack = filter_input(INPUT_POST, "idTrack", FILTER_VALIDATE_INT);
 
 if ($idPlaylist && $idTrack) {
     $query = updatePlaylist($idPlaylist, $idTrack);
-    if ($query) {
+    if ($query != false) {
         echo 1;
     } else {
         echo 0;

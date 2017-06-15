@@ -24,19 +24,20 @@ $(function () {
     }
 
     modal.on('click', '#accept', function () {
-        
+
         var idPlaylist = modal.find('select').find(":selected").val();
         var updateSucess = updatePlaylist(idPlaylist, idTrack);
-        
+        console.log(idPlaylist);
+        console.log(idTrack);
         if (updateSucess) {
             alert('Track added to your playlist.');
             $('#close').click();
         } else {
             alert('This track already exists in this playlist.');
         }
-        
+
     });
-    
+
     modal.on('hidden.bs.modal', function (e) {
         parent.history.back();
         return false;
@@ -54,9 +55,9 @@ function generateOptions(values) {
 function getPlaylists() {
     var output = false;
     $.post({
-        url: './http/getPlaylists.php',
+        url: './http/getPlaylistsWithoutCount.php',
         async: false,
-        data: {getPlaylists: true},
+        data: {getPlaylistsWithoutCount: true},
         success: function (response) {
             var infos = $.parseJSON(response);
             output = infos;
@@ -65,6 +66,7 @@ function getPlaylists() {
     });
     return output;
 }
+
 function updatePlaylist(idPlaylist, idTrack) {
     var output =
             $.post({
