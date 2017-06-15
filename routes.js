@@ -116,7 +116,7 @@ function render(url) {
             $('#app').html('');
             loadHtmlFile('views/single_playlist.html', '#app');
         },
-        '#updatePlaylist': function(){            
+        '#updatePlaylist': function () {
             loadHtmlFile('views/modal_update_playlist.html', '#app');
         },
         '#albums': function () {
@@ -140,6 +140,7 @@ function render(url) {
         '#upload': function () {
             if (getUserSession() != "") {
                 if (incompleteSongs.length > 0) {
+                    $('#app').html('');
                     loadHtmlFile('views/modalUpdateMeta.html', '#app');
                 } else {
                     gotoRoute(routesEnum.HOME);

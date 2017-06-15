@@ -28,8 +28,8 @@ $(function () {
     });
 
     $('#modal-update').on('click', 'button', function (event) {
-        if (detectEmptyInputs("input[type=text]")) {
-            var updatedSongs = updateMetadatas('input[type=text]', incompleteSongs);
+        if (detectEmptyInputs("#modal-update input[type=text]")) {
+            var updatedSongs = updateMetadatas('#modal-update input[type=text]', incompleteSongs);
             var mergedSongs = updatedSongs.concat(uploadedSongs);
             uploadFiles('#inputFile', mergedSongs);
         } else {
@@ -68,8 +68,9 @@ function updateMetadatas(selector, incompleteDatas) {
 function detectEmptyInputs(selector) {
     var flag = true;
     $(selector).each(function (i) {
+        var val = $(this).val();
         var formGroup = $(this).parent().parent();
-        if ($(this).val() === "") {
+        if (val === "" || !validateString(val)) {
             formGroup.addClass('has-error');
             flag = false;
         } else {
@@ -91,13 +92,13 @@ function generateFormGroup(datas) {
                     value = "";
                     html += '<div class="form-group has-error">';
                     html += '<label class="col-sm-2 control-label col-lg-2">' + index.toUpperCase() + '</label>';
-                    html += '<div class="col-lg-10"><input type="text" class="form-control" id="inputError" value="' + value + '"></div>';
+                    html += '<div class="col-lg-10"><input type="text" class="form-control" class="inputError" value="' + value + '"></div>';
                     html += '</div>';
                 }
                 else {
                     html += '<div class="form-group">';
                     html += '<label class="col-sm-2 control-label col-lg-2">' + index.toUpperCase() + '</label>';
-                    html += '<div class="col-lg-10"><input type="text" class="form-control" id="inputError" value="' + value + '"></div>';
+                    html += '<div class="col-lg-10"><input type="text" class="form-control" class="inputError" value="' + value + '"></div>';
                     html += '</div>';
                 }
             }
