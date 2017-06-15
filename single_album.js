@@ -30,16 +30,6 @@ $(function () {
             window.audioPlayer.SetPos(id);
             window.audioPlayer.Play();
         });
-//
-//        $(window.audioPlayer.audio).on("ended", function () {
-//            window.audioPlayer.Next();
-//        });
-
-
-
-
-
-
     }
 });
 

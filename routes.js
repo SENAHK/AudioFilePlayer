@@ -38,7 +38,9 @@ var routesEnum = {
     ABOUT: 'about/',
     LOGIN: 'login/',
     LOGOUT: 'logout/',
-    UPLOAD: 'upload/'
+    UPLOAD: 'upload/',
+    PLAYLISTS : 'playlists/',
+    SINGLE_PLAYLIST: 'playlist/'
 }
 
 /**
@@ -105,7 +107,13 @@ function render(url) {
             }
         },
         '#playlists': function () {
+            $('#app').html('');
             setActiveLink('playlists');
+            loadHtmlFile('views/playlists.html', '#app');
+        },       
+        '#playlist': function () {
+            $('#app').html('');
+            loadHtmlFile('views/playlist.html', '#app');
         },
         '#albums': function () {
             setActiveLink('albums');

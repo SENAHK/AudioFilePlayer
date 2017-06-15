@@ -12,12 +12,13 @@
 
 $(function () {
 
-    var music = window.audioPlayer.audio; // id for audio element
+    var music = window.audioPlayer.audio; // audio element
     var readButton = $('#btn-play'); // play button
     var playhead = $('#playhead'); // playhead
     var timeline = $('#timeline'); // timeline
 
     var timelineWidth = timeline.width() - playhead.width();
+    
     $('#btn-previous').on('click', function () {
         if (audioPlayer.songs.length > 0) {
             audioPlayer.Previous();

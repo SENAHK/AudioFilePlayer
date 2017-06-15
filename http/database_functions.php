@@ -249,3 +249,50 @@ function getTracksOfAlbum($idAlbum, $idUser) {
         return false;
     }
 }
+
+function getPlaylists($idUser) {
+    try {
+        $query = "SELECT p.idPlaylist, p.nomPlaylist, COUNT(t.idTitre) nbTitres
+                  FROM playlists p
+                  INNER JOIN composer c
+	                ON p.idPlaylist = c.idPlaylist
+                  INNER JOIN titres t
+                        ON c.idTitre = t.idTitre
+                  WHERE t.idUtilisateur = :idUser
+                  group by nomPlaylist";  
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idUser", $idUser);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        echo $ex->getMessage();
+        return false;
+    }
+}
+
+function getPlaylistTracks($idPlaylist, $idUser){
+    try {
+    $query = "SELECT art.nomArtiste, t.nomTitre, t.idTitre, t.fichierTitre, p.nomPlaylist, t.idUtilisateur, a.nomAlbum
+              FROM playlists p
+              INNER JOIN composer c
+                      ON p.idPlaylist = c.idPlaylist
+              INNER JOIN titres t
+                      ON c.idTitre = t.idTitre
+              INNER JOIN albums a
+                      ON t.idAlbum = a.idAlbum
+              INNER JOIN avoir av
+                      ON a.idAlbum = av.idAlbum
+              INNER JOIN artistes art
+                      ON av.idArtiste = art.idArtiste
+              WHERE t.idUtilisateur = :idUser
+              AND p.idPlaylist = :idPlaylist";
+    $statement = getConnexion()->prepare($query);
+    $statement->bindParam(":idUser", $idUser);
+    $statement->bindParam(":idPlaylist", $idPlaylist);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        echo $ex->getMessage();
+        return false;
+    }
+}
