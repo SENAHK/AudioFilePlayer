@@ -10,8 +10,8 @@
  */
 
 var jsmediatags = window.jsmediatags;
-var songNames = [];
-var songTags = {};
+//var songNames = [];
+//var songTags = {};
 $(function () {
     uploadedSongs = [];
     $('#titleUser').html(connectedUser.toUpperCase());
@@ -22,31 +22,16 @@ $(function () {
 
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
-        songNames = [];
-        songTags = {};
-        console.log(e.target.files.length);
-        for (var i = 0; i < e.target.files.length; i++) {
-            songNames.push({filename: e.target.files[i].name});
-            jsmediatags.read(e.target.files[i], {
-                onSuccess: function (tag) {
-                    songTags = {
-                        title: tag.tags.title,
-                        artist: tag.tags.artist,
-                        album: tag.tags.album
-                    };
-                    uploadedSongs.push(songTags);
-                },
-                onError: function (error) {
-                    console.log(error);
-                }
-            });
-        }
+//        songNames = [];
+//        songTags = {};
+        var files = e.target.files;
+        readMeta(files, 0);
     });
 
     $('#formUpload').submit(function (e) {
         e.preventDefault();
-        console.log(uploadedSongs);
-        mergeArray(uploadedSongs, songNames);
+        //mergeArray(uploadedSongs, songNames);
+        //console.log(songNames);
         console.log(uploadedSongs);
         var incompleteFiles = getIncompleteFiles(uploadedSongs);
         // Si des fichiers sont incomplets
@@ -54,10 +39,30 @@ $(function () {
             window.incompleteSongs = incompleteFiles;
             gotoRoute(routesEnum.UPLOAD);
         } else {
-            uploadFiles('#inputFile', uploadedSongs);
+            //uploadFiles('#inputFile', uploadedSongs);
         }
     });
 });
+
+
+function readMeta(array, index)
+{
+    jsmediatags.read(array[index], {
+        onSuccess: function (tag) {
+            var songTags = {
+                filename: array[index].name,
+                title: tag.tags.title,
+                artist: tag.tags.artist,
+                album: tag.tags.album
+            };
+            uploadedSongs.push(songTags);
+            if (index < array.length - 1) {
+                var newIndex = index + 1;
+                readMeta(array, newIndex);
+            }
+        }
+    });
+}
 
 function getIncompleteFiles(files) {
     var incompleteFiles = [];
@@ -70,7 +75,7 @@ function getIncompleteFiles(files) {
             }
         });
     });
-    console.log(uploadedSongs);
+    //console.log(uploadedSongs);
     return incompleteFiles;
 }
 
