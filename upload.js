@@ -21,7 +21,13 @@ $(function () {
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
         var files = e.target.files;
-        readMeta(files, 0);
+        var maxSize = $('#max-size').val();
+        if (checkFilesSize(files, maxSize)) {
+            readMeta(files, 0);
+        }else{
+            $(e.target).val('');
+            alert('File exceed maximum size of 20 MB')
+        }
     });
 
     $('#formUpload').submit(function (e) {
@@ -38,7 +44,18 @@ $(function () {
         }
     });
 });
-
+function checkFilesSize(files, maxSize) {
+    var flag = true;
+    for (var i = 0, max = files.length; i < max; i++) {
+        var fileSize = files[i].size; // in bytes
+        if (fileSize > maxSize) {
+            flag &= false;
+        } else {
+            flag &= true;
+        }
+    }
+    return flag;
+}
 
 function readMeta(array, index)
 {
