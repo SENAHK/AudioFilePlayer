@@ -7,3 +7,4 @@ https://learn.jquery.com/events/event-delegation/
 https://stackoverflow.com/questions/14499558/counting-many-to-many-association-records
 http://www.php.net/manual/en/function.array-multisort.php
 https://stackoverflow.com/questions/19575714/sort-files-by-filename
+https://stackoverflow.com/questions/13036504/waiting-ajax-success-before-next-iteration

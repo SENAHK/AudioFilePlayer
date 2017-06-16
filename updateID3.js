@@ -31,6 +31,7 @@ $(function () {
         if (detectEmptyInputs("#modal-update input[type=text]")) {
             var updatedSongs = updateMetadatas('#modal-update input[type=text]', incompleteSongs);
             var mergedSongs = updatedSongs.concat(uploadedSongs);
+            console.log(mergedSongs);
             uploadFiles('#inputFile', mergedSongs);
         } else {
             window.alert('Des champs sont vides');
@@ -51,12 +52,14 @@ function updateMetadatas(selector, incompleteDatas) {
 
         var keys = Object.keys(incompleteDatas[i]);
 
-        for (var y = 0; y < keys.length - 1; y++) {
+        // length -1 to skip the 'filename' property
+        for (var y = 0; y < keys.length -1; y++) {
             var newValue = newMetas[cpt];
             incompleteDatas[i][keys[y]] = newValue;
             cpt++;
         }
     }
+    console.log(incompleteDatas);
     return incompleteDatas;
 }
 
@@ -80,7 +83,7 @@ function detectEmptyInputs(selector) {
     return flag;
 }
 function generateFormGroup(datas) {
-    var html = '<div class="form-panel">';
+    var html = '<div class="form-panel div-update">';
     html += '<div class="row mt">';
     html += '<div class="col-lg-12">';
     $.each(datas, function (index, data) {

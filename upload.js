@@ -9,9 +9,7 @@
  
  */
 
-var jsmediatags = window.jsmediatags;
-//var songNames = [];
-//var songTags = {};
+
 $(function () {
     uploadedSongs = [];
     $('#titleUser').html(connectedUser.toUpperCase());
@@ -22,24 +20,21 @@ $(function () {
 
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
-//        songNames = [];
-//        songTags = {};
         var files = e.target.files;
         readMeta(files, 0);
     });
 
     $('#formUpload').submit(function (e) {
         e.preventDefault();
-        //mergeArray(uploadedSongs, songNames);
-        //console.log(songNames);
         console.log(uploadedSongs);
+
         var incompleteFiles = getIncompleteFiles(uploadedSongs);
         // Si des fichiers sont incomplets
         if (incompleteFiles.length > 0) {
             window.incompleteSongs = incompleteFiles;
             gotoRoute(routesEnum.UPLOAD);
         } else {
-            //uploadFiles('#inputFile', uploadedSongs);
+            uploadFiles('#inputFile', uploadedSongs);
         }
     });
 });
@@ -47,13 +42,13 @@ $(function () {
 
 function readMeta(array, index)
 {
-    jsmediatags.read(array[index], {
+    window.jsmediatags.read(array[index], {
         onSuccess: function (tag) {
             var songTags = {
-                filename: array[index].name,
                 title: tag.tags.title,
                 artist: tag.tags.artist,
-                album: tag.tags.album
+                album: tag.tags.album,
+                filename: array[index].name
             };
             uploadedSongs.push(songTags);
             if (index < array.length - 1) {
@@ -75,7 +70,6 @@ function getIncompleteFiles(files) {
             }
         });
     });
-    //console.log(uploadedSongs);
     return incompleteFiles;
 }
 
@@ -88,12 +82,12 @@ function uploadFiles(fileInput, id3Array) {
         frmData.append('id3[]', JSON.stringify(id3Array[i]));
     }
 
-
+    console.log(id3Array);
     $.ajax({
         url: './http/uploadFiles.php',
         data: frmData,
         type: 'post',
-        contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+        contentType: false,
         processData: false,
         success: function (response) {
             if (!response) {
@@ -107,16 +101,4 @@ function uploadFiles(fileInput, id3Array) {
             alert('Connection to the server failed, contact administrator.');
         }
     });
-}
-
-/**
- * merge two arrays
- * @param {type} songs
- * @param {type} names
- * @returns {undefined}
- */
-function mergeArray(songs, names) {
-    for (var i = 0; i < names.length; i++) {
-        $.extend(songs[i], names[i]);
-    }
 }

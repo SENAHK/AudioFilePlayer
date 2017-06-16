@@ -11,7 +11,7 @@
 
 
 function validateString(input) {
-    var expression = /^[^\\\/&<>" "]*$/;
+    var expression = /^[^\\\/&<>]*$/;
     return input.match(expression);
 }
 function writeErrors(selector, message) {
