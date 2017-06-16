@@ -21,7 +21,7 @@ $(function () {
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
         var files = e.target.files;
-        var maxSize = $('#max-size').val();
+        var maxSize = 15728640;
         if (checkFilesSize(files, maxSize)) {
             readMeta(files, 0);
         }else{
