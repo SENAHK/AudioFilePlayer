@@ -42,9 +42,9 @@ function userExists($user, $mdp) {
 }
 
 function usernameExists($user) {
-    $query = "SELECT idUtilisateur 
+    $query = "SELECT EXISTS(SELECT idUtilisateur 
               FROM utilisateurs
-              WHERE nomUtilisateur = :name";
+              WHERE nomUtilisateur = :name)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":name", $user, PDO::PARAM_STR);
     $statement->execute();
@@ -200,7 +200,7 @@ function getArtistesInfos($idUser) {
                 GROUP   BY a.nomArtiste
                 ORDER BY a.nomArtiste";
         $statement = getConnexion()->prepare($query);
-        $statement->bindParam(":idUser", $idUser);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
@@ -219,8 +219,8 @@ function getAlbumsOfArtist($idArtist, $idUser) {
                   AND c.idArtiste = :idArtist
                   GROUP BY a.nomAlbum";
         $statement = getConnexion()->prepare($query);
-        $statement->bindParam(':idArtist', $idArtist);
-        $statement->bindParam(':idUser', $idUser);
+        $statement->bindParam(':idArtist', $idArtist, PDO::PARAM_INT);
+        $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
@@ -241,8 +241,8 @@ function getTracksOfAlbum($idAlbum, $idUser) {
                   WHERE idUtilisateur = :idUser
                   AND t.idAlbum = :idAlbum";
         $statement = getConnexion()->prepare($query);
-        $statement->bindParam(":idAlbum", $idAlbum);
-        $statement->bindParam(":idUser", $idUser);
+        $statement->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
@@ -261,7 +261,7 @@ function getPlaylists($idUser) {
                   WHERE t.idUtilisateur = :idUser
                   group by nomPlaylist";
         $statement = getConnexion()->prepare($query);
-        $statement->bindParam(":idUser", $idUser);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
@@ -275,7 +275,7 @@ function getPlaylistsWithoutCount($idUser) {
         $query = "SELECT * "
                 . "FROM `playlists` WHERE `idUtilisateur` = :idUser";
         $statement = getConnexion()->prepare($query);
-        $statement->bindParam(":idUser", $idUser);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
@@ -301,8 +301,8 @@ function getPlaylistTracks($idPlaylist, $idUser) {
               WHERE t.idUtilisateur = :idUser
               AND p.idPlaylist = :idPlaylist";
         $statement = getConnexion()->prepare($query);
-        $statement->bindParam(":idUser", $idUser);
-        $statement->bindParam(":idPlaylist", $idPlaylist);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->bindParam(":idPlaylist", $idPlaylist, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $ex) {
@@ -316,8 +316,8 @@ function insertPlaylist($playlistName, $idUser) {
         $query = "INSERT INTO `playlists`(`nomPlaylist`, `idUtilisateur`) "
                 . "VALUES (:playlistName, :idUser)";
         $statement = getConnexion()->prepare($query);
-        $statement->bindParam(":idUser", $idUser);
-        $statement->bindParam(":playlistName", $playlistName);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->bindParam(":playlistName", $playlistName, PDO::PARAM_STR);
         $statement->execute();
         return true;
     } catch (Exception $ex) {
@@ -331,11 +331,26 @@ function updatePlaylist($idPlaylist, $idTrack) {
         $query = "INSERT INTO `composer`(`idTitre`, `idPlaylist`) "
                 . "VALUES (:idTrack, :idPlaylist)";
         $statement = getConnexion()->prepare($query);
-        $statement->bindParam(":idPlaylist", $idPlaylist);
-        $statement->bindParam(":idTrack", $idTrack);
+        $statement->bindParam(":idPlaylist", $idPlaylist, PDO::PARAM_INT);
+        $statement->bindParam(":idTrack", $idTrack, PDO::PARAM_INT);
         $statement->execute();
         return true;
     } catch (Exception $ex) {
         return false;
     }
 }
+
+function updateNickname($nickname, $idUser) {
+    try {
+        $query = "UPDATE `utilisateurs` SET `nomUtilisateur`= :nickname "
+                . "WHERE `idUtilisateur` =:idUser";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":nickname", $nickname, PDO::PARAM_STR);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->execute();
+        return true;
+    } catch (Exception $ex) {
+        return false;
+    }
+}
+

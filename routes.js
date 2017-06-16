@@ -148,6 +148,22 @@ function render(url) {
             } else {
                 gotoRoute(routesEnum.LOGIN);
             }
+        },
+        '#profile': function () {
+            if (getUserSession() != "") {
+                $('#app').html('');
+                loadHtmlFile('views/profile.html', '#app');
+            } else {
+                gotoRoute(routesEnum.LOGIN);
+            }
+        },
+        '#friends': function () {
+            if (getUserSession() != "") {
+                $('#app').html('');
+                loadHtmlFile('views/friends.html', '#app');
+            } else {
+                gotoRoute(routesEnum.LOGIN);
+            }
         }
     };
     // Execute the needed function depending on the anchor in the url, go to the right route in fact.
