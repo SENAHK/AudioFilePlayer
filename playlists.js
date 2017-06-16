@@ -13,7 +13,7 @@ $(function () {
     var infos = getPlaylists();
 
     if (!infos) {
-        alert('Connection error with the db.')
+        alert('Connection error with the db.');
     } else {
         if (infos.length > 0) {
             $('#tBody-playlists').html(generateTBodyPlaylists(infos));
@@ -50,6 +50,7 @@ function getPlaylists() {
         async: false,
         data: {getPlaylists: true},
         success: function (response) {
+            console.log(response);
             var infos = $.parseJSON(response);
             output = infos;
             console.log(output);

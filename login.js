@@ -97,7 +97,8 @@ function insertUser(user, password) {
         data: {user: user, mdp: password},
         success: function (response) {
             if (response == 1) {
-                connectedUser = user;
+                connectedUser = user;                
+                $('#title-user').html(user.toUpperCase());
                 gotoRoute(routesEnum.HOME);
             } else {
                 this.error(response);

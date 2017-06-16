@@ -42,13 +42,17 @@ function userExists($user, $mdp) {
 }
 
 function usernameExists($user) {
-    $query = "SELECT EXISTS(SELECT idUtilisateur 
+    try {
+        $query = "SELECT EXISTS(SELECT * 
               FROM utilisateurs
               WHERE nomUtilisateur = :name)";
-    $statement = getConnexion()->prepare($query);
-    $statement->bindParam(":name", $user, PDO::PARAM_STR);
-    $statement->execute();
-    return $statement->fetchColumn();
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":name", $user, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetchColumn();
+    } catch (Exception $ex) {
+        return false;
+    }
 }
 
 function insertUser($username, $password) {
@@ -354,3 +358,36 @@ function updateNickname($nickname, $idUser) {
     }
 }
 
+function addFriend($friend, $idUser) {
+    try {
+        $query = "INSERT INTO `etre_ami`(`idUtilisateur`, `idUtilisateur_utilisateurs`) 
+            VALUES (:idUser,(SELECT idUtilisateur from utilisateurs where nomUtilisateur = :friendName));";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":friendName", $friend, PDO::PARAM_STR);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->execute();
+        return true;
+    } catch (Exception $ex) {
+        return false;
+    }
+}
+
+function getFriends($idUser) {
+    try {
+        $query = "SELECT u2.nomUtilisateur nom, u2.idUtilisateur id
+FROM `etre_ami` e
+INNER JOIN utilisateurs u1
+ON e.idUtilisateur = u1.idUtilisateur
+INNER JOIN utilisateurs u2
+ON e.idUtilisateur_utilisateurs = u2.idUtilisateur
+where e.idUtilisateur = :idUser
+
+";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        return false;
+    }
+}

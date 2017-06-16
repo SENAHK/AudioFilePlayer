@@ -152,6 +152,8 @@ function render(url) {
         '#profile': function () {
             if (getUserSession() != "") {
                 $('#app').html('');
+                
+            setActiveLink('profile');
                 loadHtmlFile('views/profile.html', '#app');
             } else {
                 gotoRoute(routesEnum.LOGIN);
@@ -160,6 +162,8 @@ function render(url) {
         '#friends': function () {
             if (getUserSession() != "") {
                 $('#app').html('');
+                
+            setActiveLink('friends');
                 loadHtmlFile('views/friends.html', '#app');
             } else {
                 gotoRoute(routesEnum.LOGIN);

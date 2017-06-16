@@ -18,7 +18,7 @@ $(function () {
                 alert('Playlist added, you can add tracks by clicking + near tracks from your library');
             }
         } else {
-            writeErrors('#playlist-input', "Your name contains prohibited characters");
+            writeError('#playlist-input', "Your name contains prohibited characters");
         }
     });
 

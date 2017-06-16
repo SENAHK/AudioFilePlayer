@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
 
  * Auteur	: Michael Ramusi
  * Date	: 15 juin 2017 
@@ -19,9 +19,11 @@ $flag = filter_input(INPUT_POST, "getPlaylistsWithoutCount", FILTER_VALIDATE_BOO
 if ($flag) {
     $idUser = isset($_SESSION['idUser']) ? $_SESSION['idUser'] : false;
     if ($idUser) {
-        $output =getPlaylistsWithoutCount($idUser);
-        if ($output) {
+        $output = getPlaylistsWithoutCount($idUser);
+        if (is_array($output)) {
             echo json_encode($output);
+        }else{
+            echo 0;
         }
     } else {
         echo 0;

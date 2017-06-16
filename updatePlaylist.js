@@ -15,10 +15,10 @@ $(function () {
     var playlists = getPlaylists();
     var idTrack = location.hash.split('#updatePlaylist/')[1].trim();
     modal.modal('show');
+    console.log(playlists);
 
-    if (playlists) {
+    if (Array.isArray(playlists)) {
         modal.find('select').html(generateOptions(playlists));
-
     } else {
         modal.find('modal-body').append('<p>You have no playlist. Create one with the button in the top menu.</p>')
     }
@@ -27,8 +27,7 @@ $(function () {
 
         var idPlaylist = modal.find('select').find(":selected").val();
         var updateSucess = updatePlaylist(idPlaylist, idTrack);
-        console.log(idPlaylist);
-        console.log(idTrack);
+
         if (updateSucess) {
             alert('Track added to your playlist.');
             $('#close').click();
@@ -59,6 +58,7 @@ function getPlaylists() {
         async: false,
         data: {getPlaylistsWithoutCount: true},
         success: function (response) {
+
             var infos = $.parseJSON(response);
             output = infos;
             console.log(output);

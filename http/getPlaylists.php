@@ -20,7 +20,7 @@ if ($flag) {
     $idUser = isset($_SESSION['idUser']) ? $_SESSION['idUser'] : NULL;
     if ($idUser) {
         $playlists = getPlaylists($idUser);
-        if ($playlists) {
+        if (is_array($playlists)) {
             echo json_encode($playlists);
         } else {
             echo false;

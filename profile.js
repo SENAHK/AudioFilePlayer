@@ -35,6 +35,7 @@ function updateNickname(name) {
             console.log(response);
             if (response > 0) {
                 alert('Nickname updated');
+                $('#title-user').html(name.toUpperCase());
             } else {
                 if (response == 0) {
                     alert('connection error.');
