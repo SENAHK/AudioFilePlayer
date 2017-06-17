@@ -1,0 +1,1 @@
+la table titres et la table composer doivent être vidées car elles dépendent des fichiers contenus dans uploads/ sur le serveur

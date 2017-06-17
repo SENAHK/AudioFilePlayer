@@ -9,7 +9,8 @@
  
  */
 $(function () {
-
+    $('#profile-img').attr('src', getAvatar());
+    
     $('#playlist-frm').submit(function (e) {
         e.preventDefault();
         var playlistName = $('#playlist-input').val();

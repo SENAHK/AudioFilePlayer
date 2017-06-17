@@ -19,3 +19,20 @@ function writeError(selector, message) {
     $(selector).val("");
     $(selector).after('<div class="alert alert-danger" id="errorMsg"><span id="helpBlock" class="help-block">' + message + '</span></div>');
 }
+function getAvatar() {
+    $.post({
+        url: './http/getAvatar.php',
+        data: {getAvatar: true},
+        cache: false,
+        async: false,
+        success: function (response) {
+//            console.log(response);
+            if (response != 0) {
+                console.log(response);
+                $('#profile-img').attr('src', response);
+            }
+        }
+    });
+
+
+}

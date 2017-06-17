@@ -10,7 +10,7 @@
  */
 
 
-$(function () {
+$(function () {    
     $('#frm-friend').submit(function (e) {
         e.preventDefault();
         var friendToAdd = $('#friendName').val();

@@ -391,3 +391,47 @@ where e.idUtilisateur = :idUser
         return false;
     }
 }
+
+function getAvatar($idUser) {
+    try {
+        $query = "SELECT imageUtilisateur from utilisateurs "
+                . "WHERE idUtilisateur = :idUser";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchColumn();
+    } catch (Exception $ex) {
+        return false;
+    }
+}
+
+function insertAvatar($avatar, $idUser) {
+    try {
+        $connection = getConnexion();
+        $connection->beginTransaction();
+
+        $directory = "../uploads/" . $idUser;
+        if (!is_dir($directory)) {
+            mkdir($directory);
+        }
+        $ext = pathinfo($avatar["name"], PATHINFO_EXTENSION);
+        $imageName = "avatar_$idUser.$ext";
+        move_uploaded_file($avatar["tmp_name"], "../uploads/$idUser/$imageName");
+
+
+        $query = "UPDATE `utilisateurs` SET `imageUtilisateur`= :imageName "
+                . "WHERE idUtilisateur = :idUser";
+        $statement = $connection->prepare($query);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->bindParam(":imageName", $imageName, PDO::PARAM_INT);
+        $statement->execute();
+        $connection->commit();
+        return true;
+    } catch (Exception $ex) {
+        echo $ex->getMessage();
+        $connection->rollBack();
+        return false;
+    }
+}
+
+

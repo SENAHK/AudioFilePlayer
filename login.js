@@ -28,7 +28,7 @@ $(function () {
                 // The server accepted the user connection
                 if (response > 0) {
                     connectedUser = user;
-                    //$('#sessionUser').val(user);
+                    $('#profile-image').attr('src', getAvatar());
                     gotoRoute(routesEnum.HOME);
                 }
                 if (response == 0) {
@@ -98,7 +98,7 @@ function insertUser(user, password) {
         success: function (response) {
             if (response == 1) {
                 connectedUser = user;                
-                $('#title-user').html(user.toUpperCase());
+                $('#titleUser').html(user.toUpperCase());
                 gotoRoute(routesEnum.HOME);
             } else {
                 this.error(response);
