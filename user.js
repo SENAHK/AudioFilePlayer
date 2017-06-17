@@ -1,7 +1,7 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date         : 17 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: user.js

@@ -442,7 +442,7 @@ function insertAvatar($avatar, $idUser) {
 
 function getAlbums($idUser) {
     try {
-        $query = "SELECT a.nomAlbum, a.idAlbum, c.nomArtiste, count(t.idTitre) as nbTitres "
+        $query = "SELECT a.nomAlbum, t.fichierTitre, a.idAlbum, c.nomArtiste, count(t.idTitre) as nbTitres, t.idUtilisateur "
                 . "FROM albums a INNER JOIN avoir b ON a.idAlbum = b.idAlbum "
                 . "INNER JOIN artistes c ON b.idArtiste = c.idArtiste "
                 . "INNER JOIN titres t ON a.idAlbum = t.idAlbum "

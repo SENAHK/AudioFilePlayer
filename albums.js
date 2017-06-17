@@ -11,8 +11,8 @@
 
 $(function () {
 
-   var infos = getAlbums();
-   console.log(infos);
+    var infos = getAlbums();
+    console.log(infos);
     if (Array.isArray(infos)) {
         $('#list-albums').append(generateTilesAlbums(infos));
     }
@@ -36,7 +36,8 @@ function generateTilesAlbums(albums) {
         html += '<div class="col-xs-4 col-xs-offset-8">';
         html += '</div>';
         html += '<div class="sp-title">';
-        html += '<h3>' + album.nomAlbum + ' by ' + album.nomArtiste + '</h3>';
+        html += '<h3>' + album.nomAlbum + '</h3>';        
+        html += '<h4>by ' + album.nomArtiste + '</h4>';
         html += '</div>';
         html += '</div>';
         if (album.nbTitres > 1)
@@ -46,8 +47,8 @@ function generateTilesAlbums(albums) {
         html += '</div>';
         html += '</div>';
     }
-
-        return html;
+    
+    return html;
 }
 
 function getAlbums() {

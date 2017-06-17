@@ -14,36 +14,41 @@ $(function () {
     if (!infos) {
         alert('Connection error with the db.')
     } else {
-        for (var i = 0, max = infos.length; i < max; i++) {
-            var tile = generateTile(infos[i].nomArtiste, infos[i].nbAlbums, infos[i].idArtiste);
-            $('#list-tiles').append(tile);
-        }
+        $('#list-artists').append(generateTile(infos));
+
     }
 
 
 
 
-    $('#list-tiles').on('click', '.artist-tile', function (event) {
-        var id = $(this).data('idartist');
+    $('#list-tiles').on('click', '.band-tile', function (event) {
+        var id = $(this).data('id');
         console.log(id);
         gotoRoute(routesEnum.SINGLE_ARTISTE, id);
     });
 });
 
-function generateTile(nameArtist, nbAlbums, idArtist) {
-    var html = '<div class="col-lg-4 col-md-4 col-sm-4 mb artist-tile" data-idartist="' + idArtist + '">';
-    html += '<div class="white-panel pn">';
-    html += '<div class="white-header">';
-    html += '<h5>' + nameArtist + '</h5>';
-    html += '</div>';
-    html += '<div class="row>"';
-    html += '<div class="col-md-12">';
-    html += '<p class="small mt"># d\'albums</p>';
-    html += '<p>' + nbAlbums + '</p>';
-    html += '</div>';
-    html += '</div>';
-    html += '</div>';
-    html += '</div>';
+function generateTile(artists) {
+    var html = "";
+    var artist = "";
+    for (var i = 0; i < artists.length; i++) {
+        artist = artists[i];
+        html += '<div class="col-lg-4 col-md-4 col-sm-4 mb">';
+        html += '<div class="content-panel pn">';
+        html += '<div class="album-tile band-tile" data-id="' + artist.idArtiste + '">';
+        html += '<div class="col-xs-4 col-xs-offset-8">';
+        html += '</div>';
+        html += '<div class="sp-title">';
+        html += '<h3>' + artist.nomArtiste + '</h3>';
+        html += '</div>';
+        html += '</div>';
+        if (artist.nbAlbums > 1)
+            html += '<p class="followers">' + artist.nbAlbums + ' albums</p>';
+        else
+            html += '<p class="followers">' + artist.nbAlbums + ' album</p>';
+        html += '</div>';
+        html += '</div>';
+    }
     return html;
 }
 
