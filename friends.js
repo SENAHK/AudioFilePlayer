@@ -10,7 +10,7 @@
  */
 
 
-$(function () {    
+$(function () {
     $('#frm-friend').submit(function (e) {
         e.preventDefault();
         var friendToAdd = $('#friendName').val();
@@ -25,6 +25,12 @@ $(function () {
     if (Array.isArray(friends)) {
         $('#list-friends').html(generateTilesFriends(friends));
     }
+    
+    $('.list-user').on('click', 'a', function(){
+        var username = $(this).data('name');
+        
+        //gotoRoute();
+    })
 
 });
 function addFriend(name) {
@@ -70,19 +76,19 @@ function generateTilesFriends(friends) {
     console.log(friends);
     for (var i = 0, max = friends.length; i < max; i++) {
         html += '<div class="col-lg-4 col-md-4 col-sm-4 mb">';
-        html += '<div class="white-panel pn">';
+        html += '<div class="white-panel pn list-user">';
         html += '<div class="white-header">';
         html += '<h5>' + friends[i].nom.toUpperCase() + '</h5>';
         html += '</div>';
         html += '<p><img src="assets/img/ui-zac.jpg" class="img-circle" width="50"></p>';
         html += '<div class="row">';
         html += '<div class="col-md-6">';
-        html += '<p class="small mt">member since</p>';
-        html += '<p>2012</p>';
+        html += '<p class="small mt"># of titles</p>';
+        html += '<p>'+ friends[i].nbTitres+'</p>';
         html += '</div>';
         html += '<div class="col-md-6">';
-        html += '<p class="small mt">total spend</p>';
-        html += '<p>2012</p>';
+        html += '<p class="small mt"># of albums</p>';
+        html += '<p><a data-name="'+friends[i].nom+'">'+ friends[i].nbAlbums+'</a></p>';
         html += '</div>';
         html += '</div>';
         html += '</div>';

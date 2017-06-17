@@ -374,15 +374,21 @@ function addFriend($friend, $idUser) {
 
 function getFriends($idUser) {
     try {
-        $query = "SELECT u2.nomUtilisateur nom, u2.idUtilisateur id
-FROM `etre_ami` e
-INNER JOIN utilisateurs u1
-ON e.idUtilisateur = u1.idUtilisateur
-INNER JOIN utilisateurs u2
-ON e.idUtilisateur_utilisateurs = u2.idUtilisateur
-where e.idUtilisateur = :idUser
-
-";
+        $query = "SELECT  e.idAmi, u.nomUtilisateur nom,
+                (
+                    SELECT COUNT(*) 
+                    FROM titres t
+                    WHERE t.idUtilisateur = e.idAmi
+                ) as nbTitres,
+                (
+                    SELECT  COUNT(DISTINCT idAlbum) 
+                    FROM titres t    
+                    WHERE t.idUtilisateur = e.idAmi
+                ) as nbAlbums
+                FROM etre_ami e
+                INNER JOIN utilisateurs u
+                ON e.idAmi = u.idUtilisateur
+                where e.idUtilisateur = 1";
         $statement = getConnexion()->prepare($query);
         $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();
