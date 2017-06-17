@@ -19,13 +19,7 @@ $(function () {
     });
     render(decodeURI(window.location.hash));
 });
-function initialize() {
-    window.audioPlayer = new Player(document.createElement('audio'));
-    window.connectedUser = "";
-    window.connectedUser = getUserSession();
-    window.incompleteSongs = [];
-    window.uploadedSongs = [];
-}
+
 /**
  * Enum for routes
  */
@@ -42,7 +36,7 @@ var routesEnum = {
     PLAYLISTS: 'playlists/',
     SINGLE_PLAYLIST: 'playlist/',
     UPDATE_PLAYLIST: 'updatePlaylist/',
-    USER_ALBUMS : 'user/'
+    USER_ALBUMS: 'user/'
 }
 
 /**
@@ -175,49 +169,20 @@ function render(url) {
             } else {
                 gotoRoute(routesEnum.LOGIN);
             }
+        },
+        '#user': function () {
+            if (getUserSession() != "") {
+                $('#app').html('');
+                setActiveLink('friends');
+                loadHtmlFile('views/user.html', '#app');
+            } else {
+                gotoRoute(routesEnum.LOGIN);
+            }
         }
+
     };
     // Execute the needed function depending on the anchor in the url, go to the right route in fact.
     if (routes[anchor]) {
         routes[anchor]();
     }
-
-}
-/**
- * append an html file after a DOM element
- * @param {type} file: the html file
- * @param {type} context: the DOM element
- * @returns {undefined}
- */
-function loadHtmlFile(file, context) {
-    jQuery.ajaxSetup({async: false});
-    $.get(file, '', function (data) {
-        $(context).append(data);
-        $(context).hide();
-        $(context).show('slow');
-    });
-
-    jQuery.ajaxSetup({async: true});
-}
-
-function setActiveLink(name) {
-    var ul = $('ul');
-    ul.children().removeClass('active');
-    var a = $('a[href="#' + name + '"]');
-    a.parent().addClass('active');
-    a.removeClass('active');
-}
-
-function getUserSession() {
-    return $.get({
-        url: './http/getSession.php',
-        async: false
-    }).responseText;
-}
-
-function destroySession() {
-    $.get({
-        url: './http/destroySession.php',
-        async: false
-    });
 }

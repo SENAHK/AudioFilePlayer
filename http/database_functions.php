@@ -360,7 +360,7 @@ function updateNickname($nickname, $idUser) {
 
 function addFriend($friend, $idUser) {
     try {
-        $query = "INSERT INTO `etre_ami`(`idUtilisateur`, `idUtilisateur_utilisateurs`) 
+        $query = "INSERT INTO `etre_ami`(`idUtilisateur`, `idAmi`) 
             VALUES (:idUser,(SELECT idUtilisateur from utilisateurs where nomUtilisateur = :friendName));";
         $statement = getConnexion()->prepare($query);
         $statement->bindParam(":friendName", $friend, PDO::PARAM_STR);
@@ -449,6 +449,27 @@ function getAlbums($idUser) {
                 . "WHERE t.idUtilisateur = :idUser "
                 . "GROUP BY a.nomAlbum ORDER BY a.nomAlbum";
         $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        return false;
+    }
+}
+
+function getFriendsAlbums($name, $idUser) {
+    try {
+        $query = "SELECT a.nomAlbum, art.nomArtiste "
+                . "FROM etre_ami e "
+                . "INNER JOIN utilisateurs u ON e.idAmi = u.idUtilisateur "
+                . "INNER JOIN titres t ON e.idAmi = t.idUtilisateur "
+                . "INNER JOIN avoir ON t.idAlbum = avoir.idAlbum "
+                . "INNER JOIN albums a ON avoir.idAlbum = a.idAlbum "
+                . "INNER JOIN artistes art ON avoir.idArtiste = art.idArtiste "
+                . "WHERE e.idUtilisateur = :idUser AND u.nomUtilisateur = :friendName "
+                . "GROUP BY a.nomAlbum";
+        $statement = getConnexion()->prepare($query);
+        $statement->bindParam(":friendName", $name, PDO::PARAM_STR);
         $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);

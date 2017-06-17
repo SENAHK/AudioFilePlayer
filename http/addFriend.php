@@ -14,19 +14,24 @@
 require './database_functions.php';
 session_start();
 $friend = filter_input(INPUT_POST, "friend", FILTER_SANITIZE_STRING);
-echo "ok";
 if ($friend) {
     $idUser = isset($_SESSION['idUser']) ? $_SESSION['idUser'] : false;
-    var_dump($idUser);
+    // Session problem
     if ($idUser) {
-        $exists = usernameExists($friend);
-        if (!$exists) {
-            echo -1;
+        // The user put his own name
+        if ($friend == $_SESSION['user']) {
+            echo -2;
         } else {
-            if (addFriend($friend, $idUser )) {
-                echo 1;
+            $exists = usernameExists($friend);
+            // Friend doesn't exist
+            if (!$exists) {
+                echo -1;
             } else {
-                echo 2;
+                if (addFriend($friend, $idUser)) {
+                    echo 1;
+                } else {
+                    echo 2;
+                }
             }
         }
     } else {

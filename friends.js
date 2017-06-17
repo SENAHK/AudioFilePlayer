@@ -11,28 +11,36 @@
 
 
 $(function () {
+
+    showFriends();
     $('#frm-friend').submit(function (e) {
         e.preventDefault();
         var friendToAdd = $('#friendName').val();
 
         if (validateString(friendToAdd)) {
             addFriend(friendToAdd);
+            showFriends();
         } else {
             alert('Forbidden characters');
         }
     });
-    var friends = getFriends();
-    if (Array.isArray(friends)) {
-        $('#list-friends').html(generateTilesFriends(friends));
-    }
-    
-    $('.list-user').on('click', 'a', function(){
+
+
+    $('.list-user').on('click', function () {
         var username = $(this).data('name');
-        
-        gotoRoute(routesEnum.USER_ALBUMS, id);
-    })
+        console.log(username);
+        gotoRoute(routesEnum.USER_ALBUMS, username);
+    });
 
 });
+
+function showFriends() {
+    var friends = getFriends();
+    if (Array.isArray(friends)) {
+        $('#list-friends').append(generateTilesFriends(friends));
+
+    }
+}
 function addFriend(name) {
     $.post({
         url: './http/addFriend.php',
@@ -40,7 +48,7 @@ function addFriend(name) {
         success: function (response) {
             response = Number(response);
             if (response == 0) {
-                alert('connection error.');
+                alert('Invalid data');
             }
             if (response == -1) {
                 alert('this person doesnt exist');
@@ -50,6 +58,9 @@ function addFriend(name) {
             }
             if (response == 1) {
                 alert('your are now friends with ' + name);
+            }
+            if (response == -2) {
+                alert('You can\'t be friend with yourself');
             }
         }, error: function () {
             alert('connection error.');
@@ -76,7 +87,7 @@ function generateTilesFriends(friends) {
     console.log(friends);
     for (var i = 0, max = friends.length; i < max; i++) {
         html += '<div class="col-lg-4 col-md-4 col-sm-4 mb">';
-        html += '<div class="white-panel pn list-user">';
+        html += '<div class="white-panel pn list-user"  data-name="' + friends[i].nom + '">';
         html += '<div class="white-header">';
         html += '<h5>' + friends[i].nom.toUpperCase() + '</h5>';
         html += '</div>';
@@ -84,11 +95,11 @@ function generateTilesFriends(friends) {
         html += '<div class="row">';
         html += '<div class="col-md-6">';
         html += '<p class="small mt"># of titles</p>';
-        html += '<p>'+ friends[i].nbTitres+'</p>';
+        html += '<p>' + friends[i].nbTitres + '</p>';
         html += '</div>';
         html += '<div class="col-md-6">';
         html += '<p class="small mt"># of albums</p>';
-        html += '<p><a data-name="'+friends[i].nom+'">'+ friends[i].nbAlbums+'</a></p>';
+        html += '<p>' + friends[i].nbAlbums + '</p>';
         html += '</div>';
         html += '</div>';
         html += '</div>';
