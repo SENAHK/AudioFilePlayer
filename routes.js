@@ -120,7 +120,13 @@ function render(url) {
             loadHtmlFile('views/modal_update_playlist.html', '#app');
         },
         '#albums': function () {
-            setActiveLink('albums');
+            if (getUserSession() != "") {
+                $('#app').html('');
+                setActiveLink('albums');
+                loadHtmlFile('views/albums.html', '#app');
+            } else {
+                gotoRoute(routesEnum.LOGIN);
+            }
         },
         '#album': function () {
             if (getUserSession() != "") {
@@ -152,8 +158,8 @@ function render(url) {
         '#profile': function () {
             if (getUserSession() != "") {
                 $('#app').html('');
-                
-            setActiveLink('profile');
+
+                setActiveLink('profile');
                 loadHtmlFile('views/profile.html', '#app');
             } else {
                 gotoRoute(routesEnum.LOGIN);
@@ -162,8 +168,8 @@ function render(url) {
         '#friends': function () {
             if (getUserSession() != "") {
                 $('#app').html('');
-                
-            setActiveLink('friends');
+
+                setActiveLink('friends');
                 loadHtmlFile('views/friends.html', '#app');
             } else {
                 gotoRoute(routesEnum.LOGIN);
@@ -186,6 +192,8 @@ function loadHtmlFile(file, context) {
     jQuery.ajaxSetup({async: false});
     $.get(file, '', function (data) {
         $(context).append(data);
+        $(context).hide();
+        $(context).show('slow');
     });
 
     jQuery.ajaxSetup({async: true});

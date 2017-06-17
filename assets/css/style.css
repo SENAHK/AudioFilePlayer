@@ -2242,7 +2242,7 @@ label {
 a:hover{
     cursor: pointer;
 }
-.artist-tile:hover{
+.artist-tile:hover, .album-tile{
     cursor: pointer;
 }
 

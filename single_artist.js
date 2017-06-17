@@ -29,7 +29,7 @@ $(function () {
         }
     }
 
-    $('#list-tiles').on('click', 'button', function (event) {
+    $('#list-tiles').on('click', '.album-tile', function (event) {
         var id = $(this).data('idalbum');
         gotoRoute(routesEnum.SINGLE_ALBUM, id);
     });
@@ -43,9 +43,8 @@ function isInteger(str) {
 function generateTileAlbum(nameAlbum, idAlbum, nbTitres) {
     var html = '<div class="col-lg-4 col-md-4 col-sm-4 mb">';
     html += '<div class="content-panel pn">';
-    html += '<div class="album-tile">';
+    html += '<div class="album-tile" data-idalbum="' + idAlbum + '">';
     html += '<div class="col-xs-4 col-xs-offset-8">';
-    html += '<button class="btn btn-sm btn-clear-g" data-idalbum="' + idAlbum + '">SEE TRACKS</button>';
     html += '</div>';
     html += '<div class="sp-title">';
     html += '<h3>' + nameAlbum + '</h3>';
