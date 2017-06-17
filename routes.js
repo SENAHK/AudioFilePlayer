@@ -41,7 +41,8 @@ var routesEnum = {
     UPLOAD: 'upload/',
     PLAYLISTS: 'playlists/',
     SINGLE_PLAYLIST: 'playlist/',
-    UPDATE_PLAYLIST: 'updatePlaylist/'
+    UPDATE_PLAYLIST: 'updatePlaylist/',
+    USER_ALBUMS : 'user/'
 }
 
 /**

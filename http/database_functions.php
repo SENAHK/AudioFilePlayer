@@ -388,7 +388,7 @@ function getFriends($idUser) {
                 FROM etre_ami e
                 INNER JOIN utilisateurs u
                 ON e.idAmi = u.idUtilisateur
-                where e.idUtilisateur = 1";
+                where e.idUtilisateur = :idUser";
         $statement = getConnexion()->prepare($query);
         $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();

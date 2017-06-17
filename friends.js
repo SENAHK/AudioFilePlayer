@@ -29,7 +29,7 @@ $(function () {
     $('.list-user').on('click', 'a', function(){
         var username = $(this).data('name');
         
-        //gotoRoute();
+        gotoRoute(routesEnum.USER_ALBUMS, id);
     })
 
 });
