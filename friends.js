@@ -1,11 +1,11 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date	: 16 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: friends
- * Fonction	:
+ * Fonction	: Gère la récupération et l'affichage des amis
  
  */
 
