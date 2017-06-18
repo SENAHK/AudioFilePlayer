@@ -106,6 +106,9 @@ function uploadFiles(fileInput, id3Array) {
             if (response == -1) {
                 alert('You can\'t upload more than 50MB of files !');
             }
+            if (response == -3) {
+                alert('Files must be .mp3');
+            }
             if (response == 1) {
                 $(fileInput).val('');
                 alert('Upload succeed');

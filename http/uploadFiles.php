@@ -17,6 +17,10 @@ if (filesAreTooBig($_FILES["files"]["tmp_name"], MAX_POST_SIZE)) {
     echo -1;
     exit();
 }
+if (filesAreNotMp3($_FILES['files']['name'])) {
+    echo -3;
+    exit();
+}
 
 
 array_multisort(
@@ -58,7 +62,7 @@ if ($id3_datas && $idUser) {
         echo 1;
     } catch (Exception $ex) {
         $connection->rollBack();
-        $message = $ex->getMessage() == -2? $ex->getMessage() : 0;
+        $message = $ex->getMessage() == -2 ? $ex->getMessage() : 0;
         echo $message;
     }
 } else {
@@ -113,11 +117,20 @@ function moveFiles($directories) {
 
 function filesAreTooBig($files, $max) {
     $sum = 0;
-
     foreach ($files as $key => $file) {
         if (file_exists($file)) {
             $sum += filesize($file);
         }
     }
     return ($sum >= $max);
+}
+
+function filesAreNotMp3($files) {
+    foreach ($files as $file) {
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+        if ($extension != "mp3") {
+            return true;
+        }
+    }
+    return false;
 }
