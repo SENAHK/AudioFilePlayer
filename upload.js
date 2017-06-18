@@ -107,6 +107,7 @@ function uploadFiles(fileInput, id3Array) {
         contentType: false,
         processData: false,
         success: function (response) {
+            response = parseInt(response);
             if (!response) {
                 alert('Upload failed. Try again or contact administrator.')
             } else {

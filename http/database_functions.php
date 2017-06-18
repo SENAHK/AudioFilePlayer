@@ -56,8 +56,8 @@ function usernameExists($user) {
 }
 
 function insertUser($username, $password) {
-    $query = "INSERT INTO utilisateurs "
-            . "VALUES(null,:user, :pass)";
+    $query = "INSERT INTO `utilisateurs`( `nomUtilisateur`, `mdpUtilisateur`) "
+            . "VALUES(:user, :pass)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":user", $username, PDO::PARAM_STR);
     $statement->bindParam(":pass", $password, PDO::PARAM_STR);
@@ -84,7 +84,7 @@ function artistExists($nameArtist) {
 }
 
 function insertArtist($nameArtist) {
-    $query = "INSERT INTO artistes VALUES(null, :artistName)";
+    $query = "INSERT INTO `artistes` (`nomArtiste`) VALUES ( :artistName)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":artistName", $nameArtist, PDO::PARAM_STR);
     $statement->execute();
@@ -92,7 +92,7 @@ function insertArtist($nameArtist) {
 }
 
 function insertAlbum($nameAlbum) {
-    $query = "INSERT INTO albums VALUES(null, :albumName)";
+    $query = "INSERT INTO `albums` (`nomAlbum`) VALUES(:albumName)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":albumName", $nameAlbum, PDO::PARAM_STR);
     $statement->execute();
@@ -120,7 +120,7 @@ function manyToManyAvoirExists($idArtist, $idAlbum) {
 
 function insertTitle($nameTitle, $idAlbum, $idUser, $nameFile) {
 
-    $query = "INSERT INTO titres VALUES(null, :titleName, :fileName, :albumId, :userId)";
+    $query = "INSERT INTO `titres` (`nomTitre`, `fichierTitre`, `idAlbum`, `idUtilisateur`) VALUES(:titleName, :fileName, :albumId, :userId)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":titleName", $nameTitle, PDO::PARAM_STR);
     $statement->bindParam(":fileName", $nameFile, PDO::PARAM_STR);
@@ -152,35 +152,27 @@ function titleExists($nameTitle, $idAlbum, $idUser) {
  * @return string
  */
 function insertNewSong($artist, $album, $song, $idUser, $fileName) {
-//    try {
-//        $connection = getConnexion();
-//        $connection->beginTransaction();
+    $idAlbum = albumExists($album);
+    $idArtist = artistExists($artist);
 
-        $idAlbum = albumExists($album);
-        $idArtist = artistExists($artist);
-
-        // add the new album in the eponymous table if doesn't exist
-        if (!$idAlbum) {
-            $idAlbum = insertAlbum($album);
-        }
-        // add the new artist in the eponymous table if doesn't exist
-        if (!$idArtist) {
-            $idArtist = insertArtist($artist);
-        }
-        // add the id of the album and artist in 'avoir' table if doesn't exist
-        if (!manyToManyAvoirExists($idArtist, $idAlbum)) {
-            insertManyToManyAvoir($idArtist, $idAlbum);
-        }
-        // prevent duplicate entries
-        if (!titleExists($song, $idAlbum, $idUser)) {
-            insertTitle($song, $idAlbum, $idUser, $fileName);
-        }
-//        $connection->commit();
-//        return true;
-//    } catch (Exception $ex) {
-//        $connection->rollBack();
-//        return false;
-//    }
+    // add the new album in the eponymous table if doesn't exist
+    if (!$idAlbum) {
+        $idAlbum = insertAlbum($album);
+    }
+    // add the new artist in the eponymous table if doesn't exist
+    if (!$idArtist) {
+        $idArtist = insertArtist($artist);
+    }
+    // add the id of the album and artist in 'avoir' table if doesn't exist
+    if (!manyToManyAvoirExists($idArtist, $idAlbum)) {
+        insertManyToManyAvoir($idArtist, $idAlbum);
+    }
+    // prevent duplicate entries
+    if (!titleExists($song, $idAlbum, $idUser)) {
+        insertTitle($song, $idAlbum, $idUser, $fileName);
+    }else{
+        throw new Exception("Un des fichiers existe déjà");
+    }
 }
 
 function getArtistesInfos($idUser) {
