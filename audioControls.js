@@ -24,12 +24,12 @@ $(function () {
             audioPlayer.Previous();
         }
     });
-
-    $('#volume').val(audioPlayer.audio.volume * 100);
+    music.volume = 0.5;
+    $('#volume').val(music.volume * 100);
     $('#volume').change(function () {
         var vol = this.value;
         console.log(vol);
-        audioPlayer.audio.volume = vol / 100;
+        music.volume = vol / 100;
     });
 
     $('#btn-next').on('click', function () {
@@ -87,7 +87,7 @@ function showSongImage(fileSrc, imgSelector) {
                         window.btoa(base64String);
                 $(imgSelector).attr('src', base64);
             } else {
-                $(imgSelector).css('display', "none");
+                $(imgSelector).attr('src', './assets/img/no-image.png')
             }
 
         }
