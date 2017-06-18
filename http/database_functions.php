@@ -152,9 +152,9 @@ function titleExists($nameTitle, $idAlbum, $idUser) {
  * @return string
  */
 function insertNewSong($artist, $album, $song, $idUser, $fileName) {
-    try {
-        $connection = getConnexion();
-        $connection->beginTransaction();
+//    try {
+//        $connection = getConnexion();
+//        $connection->beginTransaction();
 
         $idAlbum = albumExists($album);
         $idArtist = artistExists($artist);
@@ -175,12 +175,12 @@ function insertNewSong($artist, $album, $song, $idUser, $fileName) {
         if (!titleExists($song, $idAlbum, $idUser)) {
             insertTitle($song, $idAlbum, $idUser, $fileName);
         }
-        $connection->commit();
-        return true;
-    } catch (Exception $ex) {
-        $connection->rollBack();
-        return false;
-    }
+//        $connection->commit();
+//        return true;
+//    } catch (Exception $ex) {
+//        $connection->rollBack();
+//        return false;
+//    }
 }
 
 function getArtistesInfos($idUser) {
