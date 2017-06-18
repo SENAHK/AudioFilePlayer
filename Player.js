@@ -10,26 +10,25 @@
 // */
 //
 "use strict";
-class Player{
-    constructor(audio){
+class Player {
+    constructor(audio) {
         this.audio = audio;
-	this.songs = [];
-	this.position = 0;
+        this.songs = [];
+        this.position = 0;
         $(this.audio).prop('loop', false);
     }
-    
-    Next(){
-       var pos = this.position +1;
-       if (pos < this.songs.length){			
-            this.SetPos(pos);            
-        }
-       else{
+
+    Next() {
+        var pos = this.position + 1;
+        if (pos < this.songs.length) {
+            this.SetPos(pos);
+        } else {
             this.SetPos(0);
         }
         this.audio.play();
     }
-    
-    Init(songArray){
+
+    Init(songArray) {
         this.songs = songArray;
         // adds a listener when song has ended
         $(this.audio).bind("ended", function (e) {
@@ -37,15 +36,14 @@ class Player{
         });
     }
 
-    Play(){
-         this.audio.play();
+    Play() {
+        this.audio.play();
     }
 
-
-    Pause(){
+    Pause() {
         this.audio.pause();
     }
-    SetPos(pos){
+    SetPos(pos) {
         this.position = pos;
         var song = this.songs[this.position];
         var filename = song.fichierTitre;
@@ -53,19 +51,24 @@ class Player{
         var artist = song.nomArtiste;
         var album = song.nomAlbum;
 
-        this.audio.src = "uploads/" + idUSer +'/' + artist + '/' + album + '/' + filename;
-    
+        this.audio.src = "uploads/" + idUSer + '/' + artist + '/' + album + '/' + filename;
+
     }
 
-    Previous(){
-        var pos = this.position -1;
-        if (pos >= 0){			
+    Previous() {
+        var pos = this.position - 1;
+        if (pos >= 0) {
             this.SetPos(pos);
-        }
-        else{
+        } else {
             this.SetPos(0);
         }
         this.audio.play();
     }
-
+    GetTags() {
+        var playing = this.songs[this.position];
+        return {artist: playing.nomArtiste, title: playing.nomTitre, album: playing.nomAlbum};
+    }
+    GetFileSrc(){
+        return this.audio.src;
+    }
 }

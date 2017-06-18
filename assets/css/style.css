@@ -2282,7 +2282,7 @@ a:hover{
 }
 
 #timeline{
-    width: 400px;
+    width: 90%;
     height: 20px;
     margin-top: 20px;
     float: left;
@@ -2304,4 +2304,12 @@ a:hover{
 }
 .band-tile{    
     background: url(../img/instagram.jpg) no-repeat center top;
+}
+#song-infos{
+    color: black;
+}
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
