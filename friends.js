@@ -5,7 +5,7 @@
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: friends
- * Fonction	: Gère la récupération et l'affichage des amis
+ * Fonction	: Gère la récupération et l'affichage  des amis
  
  */
 
