@@ -18,7 +18,7 @@ $(function () {
     var timeline = $('#timeline'); // timeline
 
     var timelineWidth = timeline.width() - playhead.width();
-
+    console.log(timelineWidth);
     $('#btn-previous').on('click', function () {
         if (audioPlayer.songs.length > 0) {
             audioPlayer.Previous();
