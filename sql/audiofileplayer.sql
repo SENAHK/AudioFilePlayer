@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 16 Juin 2017 à 16:34
+-- Généré le :  Dim 18 Juin 2017 à 18:04
 -- Version du serveur :  5.6.15-log
 -- Version de PHP :  5.5.8
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `audiofileplayer`
 --
+CREATE DATABASE IF NOT EXISTS `audiofileplayer` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `audiofileplayer`;
 
 -- --------------------------------------------------------
 
@@ -30,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `albums` (
   `idAlbum` int(11) NOT NULL AUTO_INCREMENT,
   `nomAlbum` varchar(100) NOT NULL,
   PRIMARY KEY (`idAlbum`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
 --
 -- Contenu de la table `albums`
@@ -40,7 +42,13 @@ INSERT INTO `albums` (`idAlbum`, `nomAlbum`) VALUES
 (39, 'Ratatat'),
 (40, 'Just for a day'),
 (41, 'Classics'),
-(42, 'Split');
+(42, 'Split'),
+(43, 'Visions'),
+(44, 'Lonerism'),
+(45, 'On Fire'),
+(46, 'salut'),
+(47, 'Random Access Memories'),
+(48, 'Bloom');
 
 -- --------------------------------------------------------
 
@@ -52,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `artistes` (
   `idArtiste` int(11) NOT NULL AUTO_INCREMENT,
   `nomArtiste` varchar(100) NOT NULL,
   PRIMARY KEY (`idArtiste`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 --
 -- Contenu de la table `artistes`
@@ -61,7 +69,12 @@ CREATE TABLE IF NOT EXISTS `artistes` (
 INSERT INTO `artistes` (`idArtiste`, `nomArtiste`) VALUES
 (38, 'Ratatat'),
 (39, 'Slowdive'),
-(40, 'Lush');
+(40, 'Lush'),
+(41, 'Grimes'),
+(42, 'Tame Impala'),
+(43, 'Galaxie 500'),
+(44, 'Daft Punk'),
+(45, 'Beach House');
 
 -- --------------------------------------------------------
 
@@ -84,7 +97,12 @@ INSERT INTO `avoir` (`idArtiste`, `idAlbum`) VALUES
 (38, 39),
 (39, 40),
 (38, 41),
-(40, 42);
+(40, 42),
+(41, 43),
+(42, 44),
+(43, 45),
+(44, 47),
+(45, 48);
 
 -- --------------------------------------------------------
 
@@ -99,14 +117,6 @@ CREATE TABLE IF NOT EXISTS `composer` (
   KEY `FK_composer_idPlaylist` (`idPlaylist`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `composer`
---
-
-INSERT INTO `composer` (`idTitre`, `idPlaylist`) VALUES
-(77, 5),
-(80, 5);
-
 -- --------------------------------------------------------
 
 --
@@ -115,16 +125,16 @@ INSERT INTO `composer` (`idTitre`, `idPlaylist`) VALUES
 
 CREATE TABLE IF NOT EXISTS `etre_ami` (
   `idUtilisateur` int(11) NOT NULL,
-  `idUtilisateur_utilisateurs` int(11) NOT NULL,
-  PRIMARY KEY (`idUtilisateur`,`idUtilisateur_utilisateurs`),
-  KEY `FK_ETRE_AMI_idUtilisateur_utilisateurs` (`idUtilisateur_utilisateurs`)
+  `idAmi` int(11) NOT NULL,
+  PRIMARY KEY (`idUtilisateur`,`idAmi`),
+  KEY `FK_ETRE_AMI_idUtilisateur_utilisateurs` (`idAmi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `etre_ami`
 --
 
-INSERT INTO `etre_ami` (`idUtilisateur`, `idUtilisateur_utilisateurs`) VALUES
+INSERT INTO `etre_ami` (`idUtilisateur`, `idAmi`) VALUES
 (2, 1),
 (1, 2),
 (1, 4),
@@ -167,20 +177,18 @@ CREATE TABLE IF NOT EXISTS `titres` (
   PRIMARY KEY (`idTitre`),
   KEY `FK_titres_idAlbum` (`idAlbum`),
   KEY `FK_titres_idUtilisateur` (`idUtilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=84 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 --
 -- Contenu de la table `titres`
 --
 
 INSERT INTO `titres` (`idTitre`, `nomTitre`, `fichierTitre`, `idAlbum`, `idUtilisateur`) VALUES
-(77, 'Desert Eagle', '04 Desert Eagle.mp3', 39, 2),
-(78, 'Waves', '106-slowdive-waves.mp3', 40, 2),
-(79, 'Kennedy', '12. Kennedy.mp3', 41, 2),
-(80, 'When I Die', '12. When I Die.mp3', 42, 2),
-(81, 'Lit Up', '10. Lit Up.mp3', 42, 6),
-(82, 'Starlust', '11. Starlust.mp3', 42, 6),
-(83, 'When I Die', '12. When I Die.mp3', 42, 6);
+(6, 'Blue Thunder', '01 Blue Thunder.mp3', 45, 2),
+(25, 'Isn''t It A Pity', '10 Isn''t It A Pity.mp3', 45, 2),
+(26, 'Sun''s Coming Up', '12 Sun''s Coming Up.mp3', 44, 2),
+(27, 'When I Die', '12. When I Die.mp3', 42, 2),
+(29, 'The Hours', '05 The Hours.mp3', 48, 2);
 
 -- --------------------------------------------------------
 
@@ -230,7 +238,7 @@ ALTER TABLE `composer`
 --
 ALTER TABLE `etre_ami`
   ADD CONSTRAINT `FK_ETRE_AMI_idUtilisateur` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`idUtilisateur`),
-  ADD CONSTRAINT `FK_ETRE_AMI_idUtilisateur_utilisateurs` FOREIGN KEY (`idUtilisateur_utilisateurs`) REFERENCES `utilisateurs` (`idUtilisateur`);
+  ADD CONSTRAINT `FK_ETRE_AMI_idUtilisateur_utilisateurs` FOREIGN KEY (`idAmi`) REFERENCES `utilisateurs` (`idUtilisateur`);
 
 --
 -- Contraintes pour la table `titres`
