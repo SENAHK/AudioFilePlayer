@@ -37,7 +37,6 @@ $(function () {
             audioPlayer.Next();
         }
     });
-    $('#audio-controls').height($('#sidebar').height());
 
     readButton.on('click', function () {
         // start music
@@ -53,6 +52,7 @@ $(function () {
     });
 
     $(music).bind('play', function () {
+        $('#audio-controls').height($('#sidebar').height());
         var tags = audioPlayer.GetTags();
         $('#song-title').html('<strong>' + tags.title + '</strong> by ' + tags.artist);
         var audioSrc = audioPlayer.GetFileSrc();

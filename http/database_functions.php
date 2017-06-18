@@ -171,7 +171,7 @@ function insertNewSong($artist, $album, $song, $idUser, $fileName) {
     if (!titleExists($song, $idAlbum, $idUser)) {
         insertTitle($song, $idAlbum, $idUser, $fileName);
     }else{
-        throw new Exception("Un des fichiers existe déjà");
+        throw new Exception(-2);
     }
 }
 

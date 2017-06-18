@@ -21,12 +21,12 @@ $(function () {
     $('#inputFile').change(function (e) {
         uploadedSongs = [];
         var files = e.target.files;
-        var maxSize = 20971520;
-        if (checkFilesSize(files, maxSize)) {
-            readMeta(files, 0);
-        }else{
+        var maxSize = 52428800;
+        if (filesAreTooBig(files, maxSize)) {
             $(e.target).val('');
-            alert('File exceed maximum size of 20 MB')
+            alert('You can\'t upload more than 50MB of files');
+        } else {
+            readMeta(files, 0);
         }
     });
 
@@ -44,17 +44,12 @@ $(function () {
         }
     });
 });
-function checkFilesSize(files, maxSize) {
-    var flag = true;
-    for (var i = 0, max = files.length; i < max; i++) {
-        var fileSize = files[i].size; // in bytes
-        if (fileSize > maxSize) {
-            flag &= false;
-        } else {
-            flag &= true;
-        }
+function filesAreTooBig(files, maxSize) {
+    var sum = 0;
+    for (var i = 0; i < files.length; i++) {
+        sum += files[i].size; //bytes
     }
-    return flag;
+    return (sum >= maxSize);
 }
 
 function readMeta(array, index)
@@ -108,12 +103,19 @@ function uploadFiles(fileInput, id3Array) {
         processData: false,
         success: function (response) {
             response = parseInt(response);
-            if (!response) {
-                alert('Upload failed. Try again or contact administrator.')
-            } else {
+            if (response == -1) {
+                alert('You can\'t upload more than 50MB of files !');
+            }
+            if (response == 1) {
                 $(fileInput).val('');
                 alert('Upload succeed');
                 gotoRoute(routesEnum.HOME);
+            }
+            if (response == -2) {                
+                alert('You already have this file in your library.');
+            }
+            if (response == -1) {
+                alert('Upload failed, contact administrator.');
             }
         }, error: function (jqXHR, textStatus, errorThrown) {
             alert('Connection to the server failed, contact administrator.');
