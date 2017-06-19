@@ -439,12 +439,11 @@ function insertAvatar($avatar, $idUser) {
                 . "WHERE idUtilisateur = :idUser";
         $statement = $connection->prepare($query);
         $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
-        $statement->bindParam(":imageName", $imageName, PDO::PARAM_INT);
+        $statement->bindParam(":imageName", $imageName, PDO::PARAM_STR);
         $statement->execute();
         $connection->commit();
         return true;
     } catch (Exception $ex) {
-        echo $ex->getMessage();
         $connection->rollBack();
         return false;
     }

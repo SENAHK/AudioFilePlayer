@@ -32,10 +32,10 @@ $(function () {
         if (checkNumberFiles('#upload-avatar', 1)) {
             alert('You can only upload 1 file');
         } else {
-            if (checkFilesSize($('#upload-avatar')[0].files, 5242880)) {
-                uploadAvatar('#upload-avatar');
-            } else {
+            if (filesAreTooBig($('#upload-avatar')[0].files, 5242880)) {
                 alert('Your file can\'t be greather than 5MB');
+            } else {
+                uploadAvatar('#upload-avatar');
             }
         }
     });
@@ -55,10 +55,10 @@ function uploadAvatar(input) {
             response = parseInt(response);
             $(input).val('');
             switch (response) {
-                case - 1:
+                case -1:
                     alert('Your file is not an image !');
                     break;
-                case - 2:
+                case -2:
                     alert('Your file is too big, max 5MB');
                     break;
                 case 1:
