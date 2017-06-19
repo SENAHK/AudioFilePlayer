@@ -2,6 +2,7 @@
 Template Name: DASHGUM FREE - Bootstrap 3.2 Admin Theme
 Template Version: 1.0
 Author: Carlos Alvarez
+Co-author: Michael Ramusi - CFPT
 Website: http://blacktie.co
 Premium: http://www.gridgum.com
 */
@@ -2282,7 +2283,7 @@ a:hover{
 }
 
 #timeline{
-    width: 250px;
+    width: 200px;
     height: 20px;
     margin-top: 20px;
     float: left;
