@@ -1,11 +1,11 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date	: 15 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: playlists
- * Fonction	:
+ * Fichier	: playlists.js
+ * Fonction	: controleur de la page des playlists
  
  */
 
@@ -24,7 +24,11 @@ $(function () {
         gotoRoute(routesEnum.SINGLE_PLAYLIST, id);
     });
 });
-
+/**
+ * generate the table for the playlists
+ * @param {type} playlists
+ * @returns {String}
+ */
 function generateTBodyPlaylists(playlists) {
     var idPlaylist, nomPlaylist, nbTitres, html = "";
 
@@ -42,7 +46,10 @@ function generateTBodyPlaylists(playlists) {
     }
     return html;
 }
-
+/**
+ * AJAX to retrieve all the playlists of the user
+ * @returns {Boolean|infos}
+ */
 function getPlaylists() {
     var output = false;
     $.post({

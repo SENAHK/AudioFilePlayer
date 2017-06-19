@@ -1,11 +1,11 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date	: 15 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: createPlaylist
- * Fonction	:
+ * Fichier	: createPlaylist.js
+ * Fonction	: controleur de la création des playlists
  
  */
 $(function () {
@@ -27,7 +27,11 @@ $(function () {
 });
 
 
-
+/**
+ * AJAX call to insert the playlist
+ * @param {type} name
+ * @returns {jqXHR.responseText}
+ */
 function insertPlaylist(name) {
     var output =
             $.post({

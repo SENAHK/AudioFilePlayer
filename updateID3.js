@@ -22,16 +22,19 @@ $(function () {
     });
 
     $('#btnUpload').click(function (event) {
+        // if user tries to upload something else
         if (location.hash == "#upload/") {
             alert("Veuillez d'abord envoyer les fichiers en cours de dépot");
         }
     });
-
+    // when the user has closed the modal box
     $('#modal-update').on('click', 'button', function (event) {
+        // if all the input have values
         if (detectEmptyInputs("#modal-update input[type=text]")) {
+            // get the updated songs datas
             var updatedSongs = updateMetadatas('#modal-update input[type=text]', incompleteSongs);
+            // merge the updated songs with the ones that were already correct
             var mergedSongs = updatedSongs.concat(uploadedSongs);
-            console.log(mergedSongs);
             uploadFiles('#inputFile', mergedSongs);
         } else {
             window.alert('Des champs sont vides');
@@ -40,14 +43,21 @@ $(function () {
 });
 
 
-
+/**
+ * replaces the old values of the array by the new ones 
+ * @param {type} selector the selector to iterate into
+ * @param {type} incompleteDatas the datas to process
+ * @returns {unresolved}
+ */
 function updateMetadatas(selector, incompleteDatas) {
     var newMetas = [];
-
+    // foreach html element
     $(selector).each(function (i) {
+        // get the value of the element
         newMetas.push($(this).val());
     });
     var cpt = 0;
+    // create an array the same type of the songs but with the new values
     for (var i = 0; i < incompleteDatas.length; i++) {
 
         var keys = Object.keys(incompleteDatas[i]);
@@ -59,7 +69,6 @@ function updateMetadatas(selector, incompleteDatas) {
             cpt++;
         }
     }
-    console.log(incompleteDatas);
     return incompleteDatas;
 }
 
@@ -82,6 +91,11 @@ function detectEmptyInputs(selector) {
     });
     return flag;
 }
+/**
+ * generate the forms of the incomplete files
+ * @param {type} datas
+ * @returns {String}
+ */
 function generateFormGroup(datas) {
     var html = '<div class="form-panel div-update">';
     html += '<div class="row mt">';

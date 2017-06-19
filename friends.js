@@ -4,7 +4,7 @@
  * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: friends
+ * Fichier	: friends.js
  * Fonction	: Gère la récupération et l'affichage  des amis
  
  */
@@ -25,15 +25,18 @@ $(function () {
         }
     });
 
-
+    // on tile click
     $('.list-user').on('click', function () {
         var username = $(this).data('name');
-        console.log(username);
+        // go to the route of the user
         gotoRoute(routesEnum.USER_ALBUMS, username);
     });
 
 });
-
+/**
+ * show the friends
+ * @returns {undefined}
+ */
 function showFriends() {
     var friends = getFriends();
     if (Array.isArray(friends)) {

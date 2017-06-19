@@ -1,47 +1,47 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date	: 13 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: single_album.js
- * Fonction	:
+ * Fonction	: controleur de la page single_album.html
  
  */
 
 $(function () {
     var tracks = false;
+    // retrieve the id of the album in the hash
     var idAlbum = location.hash.split('#album/')[1].trim();
     if (isInteger(idAlbum)) {
 
         tracks = getTracks(idAlbum);
-        console.log(tracks);
 
         var tBody = generateTBody(tracks);
         $('#tBody-single-album').html(tBody);
         $('#single_album h4').append(tracks[0].nomAlbum);
-
+        
+        // click on button play
         $('#single_album').on('click', '.play-song', function (event) {
+            // play the song 
             window.audioPlayer.Init(tracks);
             var id = $(this).data('id');
             window.audioPlayer.SetPos(id);
             window.audioPlayer.Play();
         });
-
+        // click on button add playlist
         $('#single_album').on('click', '.add-playlist', function (event) {
             var id = $(this).data('id');
-            console.log(id);
+            // go to the page of playlist update
             gotoRoute(routesEnum.UPDATE_PLAYLIST, id);
         });
-//        $('#single_album').on('click', 'tr', function (event) {
-//            window.audioPlayer.Init(tracks);
-//            var id = $(this).data('id');
-//            window.audioPlayer.SetPos(id);
-//            window.audioPlayer.Play();
-//        });
     }
 });
-
+/**
+ * generate the table to show the tracks
+ * @param {type} tracks
+ * @returns {String}
+ */
 function generateTBody(tracks) {
     var nomArtiste, idTitre, nomTitre, fichierTitre, html = "";
 
@@ -55,7 +55,7 @@ function generateTBody(tracks) {
         html += "<td>" + (i + 1) + "</td>";
         html += '<td>' + nomTitre + '</td>';
         html += '<td>' + nomArtiste + '</td>';
-        html += '<td><button type="button" class="btn btn-theme03 add-playlist" data-id="'+ idTitre + '"><i class="fa fa-plus"></i> to playlist</button>';
+        html += '<td><button type="button" class="btn btn-theme03 add-playlist" data-id="' + idTitre + '"><i class="fa fa-plus"></i> to playlist</button>';
         html += "<span>   </span>";
         html += '<button type="button" class="btn btn-theme03 play-song" data-id="' + i + '"><i class="fa fa-play"></i> Play</button></td>';
         html += "</tr>";
@@ -65,11 +65,11 @@ function generateTBody(tracks) {
 }
 
 
-function isInteger(str) {
-    var n = Math.floor(Number(str));
-    return String(n) === str && n >= 0;
-}
-
+/**
+ * AJAX call to retrieve the tracks of an album
+ * @param {type} id
+ * @returns {Boolean|infos}
+ */
 function getTracks(id) {
     var output = false;
     $.post({

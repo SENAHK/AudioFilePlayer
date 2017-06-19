@@ -12,13 +12,15 @@
 $(function () {
     var libraryInfos = getUserLibrary();
     if (Array.isArray(libraryInfos)) {
-        console.log(libraryInfos);
         $('#nbFriends').html(libraryInfos[0].nbAmis);
         $('#nbTracks').html(libraryInfos[0].nbTitres);
         $('#nbAlbums').html(libraryInfos[0].nbAlbums);
     }
 });
-
+/**
+ * AJAX to get the user's library infos
+ * @returns {Boolean|infos}
+ */
 function getUserLibrary() {
     var output = false;
     $.post({

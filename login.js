@@ -1,6 +1,6 @@
 /*  
  * Auteur	: Michael Ramusi
- * Date         : 2017
+ * Date         : juin 2017
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: login.js
@@ -85,7 +85,11 @@ $(function () {
     });
 });
 
-
+/**
+ * ajax call to check if user exists
+ * @param {type} user
+ * @returns {jqXHR.responseText}
+ */
 function getUsername(user) {
     return $.ajax({
         cache: false,
@@ -97,7 +101,12 @@ function getUsername(user) {
         }
     }).responseText;
 }
-
+/**
+ * ajax call to insert a user in the db
+ * @param {type} user
+ * @param {type} password
+ * @returns {undefined}
+ */
 function insertUser(user, password) {
     $.ajax({
         type: 'get',
@@ -117,7 +126,12 @@ function insertUser(user, password) {
         }
     });
 }
-
+/**
+ * write a bootstrap error
+ * @param {type} selector
+ * @param {type} message
+ * @returns {undefined}
+ */
 function writeErrors(selector, message) {
     $('input[type="password"]').val("");
     $(selector).html('<div class="alert alert-danger" id="errorMsg"><span id="helpBlock" class="help-block">' + message + '</span></div>');

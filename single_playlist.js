@@ -1,7 +1,7 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date	: 12 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: single_artists
@@ -12,13 +12,14 @@
 
 $(function () {
     var tracks = false;
+    // get the id of the playlist in the hash
     var idPlaylist = location.hash.split('#playlist/')[1].trim();
     var table = $('#table-playlist');
 
     if (isInteger(idPlaylist)) {
         tracks = getPlaylistTracks(idPlaylist);
         if (!tracks) {
-            alert('Connection error with the db.')
+            alert('Connection error with the db.');
         } else {
             if (tracks.length > 0) {
                 $('#title-playlist').append(tracks[0].nomPlaylist);
@@ -30,8 +31,9 @@ $(function () {
     }
 
 
-
+    // click on a button of the table
     table.on('click', 'button', function (event) {
+        // play the song
         window.audioPlayer.Init(tracks);
         var id = $(this).data('id');
         window.audioPlayer.SetPos(id);
@@ -39,11 +41,12 @@ $(function () {
     });
 });
 
-function isInteger(str) {
-    var n = Math.floor(Number(str));
-    return String(n) === str && n >= 0;
-}
 
+/**
+ * show the playlist
+ * @param {type} playlist
+ * @returns {String}
+ */
 function generateTBodyPlaylist(playlist) {
     var nomArtiste, nomTitre, idTitre, fichierTitre, html = "";
 
@@ -64,7 +67,11 @@ function generateTBodyPlaylist(playlist) {
     }
     return html;
 }
-
+/**
+ * AJAX call to retrieve the tracks of the playlist
+ * @param {type} id
+ * @returns {Boolean|infos}
+ */
 function getPlaylistTracks(id) {
     var output = false;
     $.post({

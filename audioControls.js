@@ -1,11 +1,11 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date	: 14 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: audioControls
- * Fonction	:
+ * Fonction	: Gère les controleurs de la musique
  
  */
 
@@ -19,11 +19,14 @@ $(function () {
 
     var timelineWidth = timeline.width() - playhead.width();
     console.log(timelineWidth);
+    // Click of the previous button
     $('#btn-previous').on('click', function () {
         if (audioPlayer.songs.length > 0) {
             audioPlayer.Previous();
         }
     });
+    
+    // Volume controls
     music.volume = 0.5;
     $('#volume').val(music.volume * 100);
     $('#volume').change(function () {
@@ -38,6 +41,7 @@ $(function () {
         }
     });
 
+    // Play button
     readButton.on('click', function () {
         // start music
         if (music.paused) {
@@ -50,7 +54,12 @@ $(function () {
             readButton.removeClass().addClass("play");
         }
     });
-
+    
+    // adds a listener when song has ended
+    $(this.audio).bind("ended", function (e) {
+        audioPlayer.Next();
+    });
+    // adds a listener when song has begun to play
     $(music).bind('play', function () {
         $('#audio-controls').height($('#sidebar').height());
         var tags = audioPlayer.GetTags();
@@ -58,14 +67,14 @@ $(function () {
         var audioSrc = audioPlayer.GetFileSrc();
         showSongImage(audioSrc, '#song-image');
     });
-
+    // adds a listener when time of song is updating
     $(music).bind('timeupdate', function () {
         if (!music.paused) {
             $('#audio-controls').show();
         }
         $('#total-time').html(secondsToMinutes(music.duration));
         $('#actual-time').html(secondsToMinutes(music.currentTime));
-
+        // move the playhead 
         var playPercent = timelineWidth * (music.currentTime / music.duration);
         playhead.css("margin-left", playPercent);
         if (music.currentTime == music.duration) {
@@ -73,6 +82,12 @@ $(function () {
         }
     });
 });
+/**
+ * read and show the image of the file if it exists
+ * @param {type} fileSrc the path to the file
+ * @param {type} imgSelector the jquery selector to the image tag to update
+ * @returns {undefined}
+ */
 function showSongImage(fileSrc, imgSelector) {
     jsmediatags.read(fileSrc, {
         onSuccess: function (tag) {
@@ -93,6 +108,11 @@ function showSongImage(fileSrc, imgSelector) {
         }
     });
 }
+/**
+ * convert seconds to mins:secs
+ * @param {type} time
+ * @returns {String}
+ */
 function secondsToMinutes(time) {
     var mins = Math.floor(time / 60);
     var secs = Math.floor(time % 60);

@@ -1,11 +1,11 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date	: 17 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: albums
- * Fonction	:
+ * Fichier	: albums.js
+ * Fonction	: Gestion de la page des albums
  
  */
 
@@ -16,15 +16,20 @@ $(function () {
     if (Array.isArray(infos)) {
         $('#list-albums').append(generateTilesAlbums(infos));
     }
-
+    // click of a tile
     $('#list-albums').on('click', '.album-tile', function (event) {
         var id = $(this).data('id');
+        // get the id of the album, and change the route
         gotoRoute(routesEnum.SINGLE_ALBUM, id);
     });
 });
 
 
-
+/**
+ * Create the albums tiles
+ * @param {type} albums the albums to show
+ * @returns {String}
+ */
 function generateTilesAlbums(albums) {
     var html = "";
     var album = "";
@@ -50,7 +55,10 @@ function generateTilesAlbums(albums) {
     
     return html;
 }
-
+/**
+ * AJAX call to retrieve the albums of the user
+ * @returns {Boolean|infos}
+ */
 function getAlbums() {
     var output = false;
     $.post({

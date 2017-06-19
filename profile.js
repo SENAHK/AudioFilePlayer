@@ -1,18 +1,17 @@
 /* 
  
  * Auteur	: Michael Ramusi
- * Date	: 16 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: profile
- * Fonction	:
+ * Fichier	: profile.js
+ * Fonction	: controleur de la page du profil
  
  */
 $(function () {
     // User changes his nickname
     $('#frm-profile').submit(function (e) {
         e.preventDefault();
-        console.log('ok');
         var newNickname = $('#nickname').val();
 
         if (validateString(newNickname)) {
@@ -40,6 +39,11 @@ $(function () {
         }
     });
 });
+/**
+ * AJAX to upload the avatar in the db
+ * @param {type} input
+ * @returns {undefined}
+ */
 function uploadAvatar(input) {
     var file = $(input)[0];
     var frmData = new FormData();
@@ -75,10 +79,18 @@ function uploadAvatar(input) {
         }
     });
 }
-
+/**
+ * check the number of files the user set
+ * @param {type} input
+ * @param {type} maxNumber
+ * @returns {Boolean} */
 function checkNumberFiles(input, maxNumber) {
     return (parseInt($(input).get(0).files.length) > maxNumber)
 }
+/**
+ * AJAX to update the nickname
+ * @param {type} name
+ * @returns {undefined} */
 function updateNickname(name) {
     $.post({
         url: './http/updateName.php',

@@ -1,11 +1,11 @@
 ///* 
 // 
 // * Auteur	: Michael Ramusi
-// * Date	: 14 juin 2017 
+// * Date	: juin 2017 
 // * Projet	: AudioFilePlayer
 // * Copyright	: TPI 2017 - Michael RAMUSI
 // * Fichier	: Player
-// * Fonction	:
+// * Fonction	: Cette classe s'occupe de gérer la lecture des fichiers audio
 //
 // */
 //
@@ -17,7 +17,9 @@ class Player {
         this.position = 0;
         $(this.audio).prop('loop', false);
     }
-
+    /**
+     * Play the next song in the songs array
+     */
     Next() {
         var pos = this.position + 1;
         if (pos < this.songs.length) {
@@ -27,13 +29,12 @@ class Player {
         }
         this.audio.play();
     }
-
+    /**
+     * Init defines the songs that will be proccessed
+     */
     Init(songArray) {
         this.songs = songArray;
-        // adds a listener when song has ended
-        $(this.audio).bind("ended", function (e) {
-            audioPlayer.Next();
-        });
+
     }
 
     Play() {
@@ -43,6 +44,10 @@ class Player {
     Pause() {
         this.audio.pause();
     }
+    
+    /**
+     * SetPos defines the src of the audio
+     */
     SetPos(pos) {
         this.position = pos;
         var song = this.songs[this.position];
@@ -52,7 +57,6 @@ class Player {
         var album = song.nomAlbum;
 
         this.audio.src = "uploads/" + idUSer + '/' + artist + '/' + album + '/' + filename;
-
     }
 
     Previous() {
@@ -64,10 +68,16 @@ class Player {
         }
         this.audio.play();
     }
+    /**
+     * Returns the tags of the song currently playing
+     */
     GetTags() {
         var playing = this.songs[this.position];
         return {artist: playing.nomArtiste, title: playing.nomTitre, album: playing.nomAlbum};
     }
+    /**
+     * Returns the current source of the playing file
+     */
     GetFileSrc(){
         return this.audio.src;
     }

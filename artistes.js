@@ -15,19 +15,20 @@ $(function () {
         alert('Connection error with the db.')
     } else {
         $('#list-artists').append(generateTile(infos));
-
     }
-
-
-
-
+    
+    // click of a tile
     $('#list-tiles').on('click', '.band-tile', function (event) {
         var id = $(this).data('id');
-        console.log(id);
+        // get the id of the artist, and change the route
         gotoRoute(routesEnum.SINGLE_ARTISTE, id);
     });
 });
-
+/**
+ * generate the tiles of the artits
+ * @param {array} artists array of the artists
+ * @returns {String}
+ */
 function generateTile(artists) {
     var html = "";
     var artist = "";
@@ -51,7 +52,10 @@ function generateTile(artists) {
     }
     return html;
 }
-
+/**
+ * AJAX call to retrieve all the informations of the artists
+ * @returns {Boolean|infos}
+ */
 function getArtistesInfos() {
     var output = false;
     $.post({

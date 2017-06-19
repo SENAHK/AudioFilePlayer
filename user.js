@@ -22,7 +22,11 @@ $(function () {
 
 
 });
-
+/**
+ * generate the table of the albums
+ * @param {type} albums
+ * @returns {String}
+ */
 function generateAlbums(albums) {
     var album = "";
     var html = "";
@@ -36,7 +40,11 @@ function generateAlbums(albums) {
     }
     return html;
 }
-
+/**
+ * AJAX call to get the friends' albums
+ * @param {type} nameFriend
+ * @returns {Boolean|infos}
+ */
 function getFriendsAlbums(nameFriend) {
     var output = false;
     $.post({
