@@ -57,7 +57,7 @@ function destroySession() {
 }
 
 function validateString(input) {
-    var expression = /^[^\\\/&<>]*$/;
+    var expression = /^[a-zA-Z0-9]+$/;
     return input.match(expression);
 }
 function writeError(selector, message) {
