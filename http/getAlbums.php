@@ -3,11 +3,11 @@
 /*
 
  * Auteur	: Michael Ramusi
- * Date	: 17 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: getAlbums
- * Fonction	:
+ * Fichier	: getAlbums.php
+ * Fonction	: Récupère les albums d'un utilisateur
 
  */
 require './database_functions.php';

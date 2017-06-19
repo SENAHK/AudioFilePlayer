@@ -3,11 +3,11 @@
 /*
 
  * Auteur	: Michael Ramusi
- * Date	: 15 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: insertPlaylist
- * Fonction	:
+ * Fonction	: insère une playlist
 
  */
 

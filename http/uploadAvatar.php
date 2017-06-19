@@ -6,7 +6,7 @@
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: uploadAvatar
- * Fonction	:
+ * Fonction	: upload l'avatar de l'utilisateur
  */
 
 // Maximum size accepted: 5 MegaBytes

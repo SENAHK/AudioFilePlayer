@@ -11,7 +11,7 @@
 require 'database_access.inc';
 
 /**
- * getConnexion lance une connexion vers la base de données
+ * getConnexion launch a connexion to specified database
  * @staticvar null $dbc
  * @return \PDO
  */
@@ -28,7 +28,12 @@ function getConnexion() {
     }
     return $dbc;
 }
-
+/**
+ * logs the user if his log infos are right
+ * @param type $user user name
+ * @param type $mdp user password
+ * @return type
+ */
 function userExists($user, $mdp) {
     $query = "SELECT idUtilisateur 
               FROM utilisateurs
@@ -40,7 +45,11 @@ function userExists($user, $mdp) {
     $statement->execute();
     return $statement->fetchColumn();
 }
-
+/**
+ * check if the user exists
+ * @param type $user
+ * @return boolean
+ */
 function usernameExists($user) {
     try {
         $query = "SELECT EXISTS(SELECT * 
@@ -54,7 +63,12 @@ function usernameExists($user) {
         return false;
     }
 }
-
+/**
+ * insert a user in the db
+ * @param type $username
+ * @param type $password
+ * @return type
+ */
 function insertUser($username, $password) {
     $query = "INSERT INTO `utilisateurs`( `nomUtilisateur`, `mdpUtilisateur`) "
             . "VALUES(:user, :pass)";
@@ -64,7 +78,11 @@ function insertUser($username, $password) {
     $statement->execute();
     return getConnexion()->lastInsertId();
 }
-
+/**
+ * check if the album exists
+ * @param type $nameAlbum
+ * @return type
+ */
 function albumExists($nameAlbum) {
     $query = "SELECT idAlbum FROM albums "
             . "WHERE nomAlbum = :albumName";
@@ -73,7 +91,11 @@ function albumExists($nameAlbum) {
     $statement->execute();
     return $statement->fetchColumn();
 }
-
+/**
+ * check if the artists exists
+ * @param type $nameArtist
+ * @return type
+ */
 function artistExists($nameArtist) {
     $query = "SELECT idArtiste FROM artistes "
             . "WHERE nomArtiste = :artistName";
@@ -82,7 +104,11 @@ function artistExists($nameArtist) {
     $statement->execute();
     return $statement->fetchColumn();
 }
-
+/**
+ * insert a new artist in the db
+ * @param type $nameArtist
+ * @return type
+ */
 function insertArtist($nameArtist) {
     $query = "INSERT INTO `artistes` (`nomArtiste`) VALUES ( :artistName)";
     $statement = getConnexion()->prepare($query);
@@ -90,7 +116,11 @@ function insertArtist($nameArtist) {
     $statement->execute();
     return getConnexion()->lastInsertId();
 }
-
+/**
+ * insert a new album in the db
+ * @param type $nameAlbum
+ * @return type
+ */
 function insertAlbum($nameAlbum) {
     $query = "INSERT INTO `albums` (`nomAlbum`) VALUES(:albumName)";
     $statement = getConnexion()->prepare($query);
@@ -98,7 +128,11 @@ function insertAlbum($nameAlbum) {
     $statement->execute();
     return getConnexion()->lastInsertId();
 }
-
+/**
+ * insert a new entry in the avoir table to link albums and artists (N-N table)
+ * @param type $idArtist
+ * @param type $idAlbum
+ */
 function insertManyToManyAvoir($idArtist, $idAlbum) {
     $query = "INSERT INTO avoir VALUES(:idArtist, :idAlbum)";
     $statement = getConnexion()->prepare($query);
@@ -106,7 +140,12 @@ function insertManyToManyAvoir($idArtist, $idAlbum) {
     $statement->bindParam(":idAlbum", $idAlbum, PDO::PARAM_INT);
     $statement->execute();
 }
-
+/**
+ * check if link between artist and album exists
+ * @param type $idArtist
+ * @param type $idAlbum
+ * @return type
+ */
 function manyToManyAvoirExists($idArtist, $idAlbum) {
     $query = "SELECT EXISTS(SELECT * FROM avoir "
             . "WHERE idAlbum=:idAlbum "
@@ -117,9 +156,14 @@ function manyToManyAvoirExists($idArtist, $idAlbum) {
     $statement->execute();
     return $statement->fetchColumn();
 }
-
+/**
+ * insert a title in the db
+ * @param type $nameTitle
+ * @param type $idAlbum
+ * @param type $idUser
+ * @param type $nameFile
+ */
 function insertTitle($nameTitle, $idAlbum, $idUser, $nameFile) {
-
     $query = "INSERT INTO `titres` (`nomTitre`, `fichierTitre`, `idAlbum`, `idUtilisateur`) VALUES(:titleName, :fileName, :albumId, :userId)";
     $statement = getConnexion()->prepare($query);
     $statement->bindParam(":titleName", $nameTitle, PDO::PARAM_STR);
@@ -128,7 +172,13 @@ function insertTitle($nameTitle, $idAlbum, $idUser, $nameFile) {
     $statement->bindParam(":userId", $idUser, PDO::PARAM_INT);
     $statement->execute();
 }
-
+/**
+ * check if title exists in the db
+ * @param type $nameTitle
+ * @param type $idAlbum
+ * @param type $idUser
+ * @return type
+ */
 function titleExists($nameTitle, $idAlbum, $idUser) {
     $query = "SELECT EXISTS(SELECT * "
             . "FROM titres "
@@ -144,7 +194,7 @@ function titleExists($nameTitle, $idAlbum, $idUser) {
 }
 
 /**
- * Insert the song's informations in the db with a sql transaction
+ * Insert the song's informations in the db (should be used in a transaction)
  * @param string $artist name of the artist
  * @param string $album name of the album
  * @param string $song name of the song
@@ -174,7 +224,11 @@ function insertNewSong($artist, $album, $song, $idUser, $fileName) {
         throw new Exception(-2);
     }
 }
-
+/**
+ * retrieve the informations of an artist
+ * @param type $idUser
+ * @return boolean
+ */
 function getArtistesInfos($idUser) {
     try {
         $query = "
@@ -203,7 +257,12 @@ function getArtistesInfos($idUser) {
         return false;
     }
 }
-
+/**
+ * retrieve the albums of an artist
+ * @param type $idArtist
+ * @param type $idUser
+ * @return boolean
+ */
 function getAlbumsOfArtist($idArtist, $idUser) {
     try {
         $query = "SELECT a.nomAlbum, a.idAlbum, c.nomArtiste, count(t.idTitre) as nbTitres
@@ -223,7 +282,11 @@ function getAlbumsOfArtist($idArtist, $idUser) {
         return false;
     }
 }
-
+/**
+ * retrieve the user's library informations
+ * @param type $idUser
+ * @return boolean
+ */
 function getUserLibrary($idUser) {
     try {
         $query = "SELECT count(distinct idTitre) as nbTitres, count(distinct a.idAlbum) as nbAlbums, t.idUtilisateur, count(distinct e.idAmi) as nbAmis "
@@ -241,7 +304,12 @@ function getUserLibrary($idUser) {
         return false;
     }
 }
-
+/**
+ * retrieve the tracks of an album
+ * @param type $idAlbum
+ * @param type $idUser
+ * @return boolean
+ */
 function getTracksOfAlbum($idAlbum, $idUser) {
     try {
         $query = "SELECT `idTitre`, `nomTitre`, `fichierTitre`, a.nomAlbum, art.nomArtiste, idUtilisateur 
@@ -263,7 +331,11 @@ function getTracksOfAlbum($idAlbum, $idUser) {
         return false;
     }
 }
-
+/**
+ * retrieve the playlists of a user + the number of titles the playlist has
+ * @param type $idUser
+ * @return boolean
+ */
 function getPlaylists($idUser) {
     try {
         $query = "SELECT p.idPlaylist, p.nomPlaylist, COUNT(t.idTitre) nbTitres
@@ -283,7 +355,11 @@ function getPlaylists($idUser) {
         return false;
     }
 }
-
+/**
+ * retrieve the user's playlists
+ * @param type $idUser
+ * @return boolean
+ */
 function getPlaylistsWithoutCount($idUser) {
     try {
         $query = "SELECT * "
@@ -297,7 +373,12 @@ function getPlaylistsWithoutCount($idUser) {
         return false;
     }
 }
-
+/**
+ * retrive the tracks of a playlist
+ * @param type $idPlaylist
+ * @param type $idUser
+ * @return boolean
+ */
 function getPlaylistTracks($idPlaylist, $idUser) {
     try {
         $query = "SELECT art.nomArtiste, t.nomTitre, t.idTitre, t.fichierTitre, p.nomPlaylist, t.idUtilisateur, a.nomAlbum
@@ -324,7 +405,12 @@ function getPlaylistTracks($idPlaylist, $idUser) {
         return false;
     }
 }
-
+/**
+ * insert a playlist
+ * @param type $playlistName
+ * @param type $idUser
+ * @return boolean
+ */
 function insertPlaylist($playlistName, $idUser) {
     try {
         $query = "INSERT INTO `playlists`(`nomPlaylist`, `idUtilisateur`) "
@@ -339,7 +425,12 @@ function insertPlaylist($playlistName, $idUser) {
         return false;
     }
 }
-
+/**
+ * update a playlist by adding a track in it
+ * @param type $idPlaylist
+ * @param type $idTrack
+ * @return boolean
+ */
 function updatePlaylist($idPlaylist, $idTrack) {
     try {
         $query = "INSERT INTO `composer`(`idTitre`, `idPlaylist`) "
@@ -353,7 +444,12 @@ function updatePlaylist($idPlaylist, $idTrack) {
         return false;
     }
 }
-
+/**
+ * update the name of the user
+ * @param type $nickname
+ * @param type $idUser
+ * @return boolean
+ */
 function updateNickname($nickname, $idUser) {
     try {
         $query = "UPDATE `utilisateurs` SET `nomUtilisateur`= :nickname "
@@ -367,7 +463,12 @@ function updateNickname($nickname, $idUser) {
         return false;
     }
 }
-
+/**
+ * add a friend to the user
+ * @param type $friend
+ * @param type $idUser
+ * @return boolean
+ */
 function addFriend($friend, $idUser) {
     try {
         $query = "INSERT INTO `etre_ami`(`idUtilisateur`, `idAmi`) 
@@ -381,7 +482,11 @@ function addFriend($friend, $idUser) {
         return false;
     }
 }
-
+/**
+ * get all the friend of a user
+ * @param type $idUser
+ * @return boolean
+ */
 function getFriends($idUser) {
     try {
         $query = "SELECT  e.idAmi, u.nomUtilisateur nom,
@@ -407,7 +512,11 @@ function getFriends($idUser) {
         return false;
     }
 }
-
+/**
+ * retrieve the avatar of a user
+ * @param type $idUser
+ * @return boolean
+ */
 function getAvatar($idUser) {
     try {
         $query = "SELECT imageUtilisateur from utilisateurs "
@@ -420,7 +529,12 @@ function getAvatar($idUser) {
         return false;
     }
 }
-
+/**
+ * insert a new avatar to the user
+ * @param type $avatar
+ * @param type $idUser
+ * @return boolean
+ */
 function insertAvatar($avatar, $idUser) {
     try {
         $connection = getConnexion();
@@ -448,7 +562,11 @@ function insertAvatar($avatar, $idUser) {
         return false;
     }
 }
-
+/**
+ * get all the albums of a user
+ * @param type $idUser
+ * @return boolean
+ */
 function getAlbums($idUser) {
     try {
         $query = "SELECT a.nomAlbum, t.fichierTitre, a.idAlbum, c.nomArtiste, count(t.idTitre) as nbTitres, t.idUtilisateur "
@@ -465,7 +583,12 @@ function getAlbums($idUser) {
         return false;
     }
 }
-
+/**
+ * get all the albums of the user's friends
+ * @param type $name
+ * @param type $idUser
+ * @return boolean
+ */
 function getFriendsAlbums($name, $idUser) {
     try {
         $query = "SELECT a.nomAlbum, art.nomArtiste "

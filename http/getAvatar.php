@@ -3,11 +3,11 @@
 /*
 
  * Auteur	: Michael Ramusi
- * Date	: 17 juin 2017 
+ * Date         : 17 juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: getAvatar
- * Fonction	:
+ * Fonction	: récupère l'avatar de l'utilisateur
  */
 require './database_functions.php';
 session_start();

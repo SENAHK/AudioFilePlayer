@@ -1,5 +1,14 @@
 <?php
+/*
 
+ * Auteur	: Michael Ramusi
+ * Date         : juin 2017 
+ * Projet	: AudioFilePlayer
+ * Copyright	: TPI 2017 - Michael RAMUSI
+ * Fichier	: logUser
+ * Fonction	: log un utilisateur en le mettant dans la session
+
+ */
 require './database_functions.php';
 session_start();
 
@@ -13,7 +22,6 @@ if (($user) && ($password)) {
         if (is_numeric($idUser)) {
             $_SESSION['user'] = $user;
             $_SESSION['idUser'] = $idUser;
-            //$_SESSION['user'] = array("username" => $user, "password" => $password);
             echo $idUser;
         } else {
             echo 0;

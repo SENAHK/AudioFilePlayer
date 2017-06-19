@@ -1,5 +1,13 @@
 <?php
+/*
+ * Auteur	: Michael Ramusi
+ * Date         : juin 2017 
+ * Projet	: AudioFilePlayer
+ * Copyright	: TPI 2017 - Michael RAMUSI
+ * Fichier	: uploadFiles
+ * Fonction	: gère l'upload des fichiers mp3
 
+ */
 require './database_functions.php';
 session_start();
 // Taille totale maximum de l'upload: ~50 megabytes
@@ -50,7 +58,6 @@ if ($id3_datas && $idUser) {
             insertNewSong($artist, $album, $title, $idUser, $filename);
         }
         $directories = createFolders($idUser, $id3_datas);
-
         $movedFiles = moveFiles($directories);
 
         // is_array = the move has failed
@@ -69,6 +76,10 @@ if ($id3_datas && $idUser) {
     echo 0;
 }
 
+/**
+ * Delete all files specified
+ * @param type $files array that contains the files 
+ */
 function unlinkFiles($files) {
     foreach ($files as $file) {
         if (file_exists($file)) {
@@ -76,7 +87,12 @@ function unlinkFiles($files) {
         }
     }
 }
-
+/**
+ * Creation of the folders that will contain the files 
+ * @param type $idUser the id of the user
+ * @param type $songDatas the songs datas
+ * @return array all folders created
+ */
 function createFolders($idUser, $songDatas) {
     $uploadDirectories = array();
     $userDirectory = "../uploads/" . $idUser;
@@ -97,7 +113,12 @@ function createFolders($idUser, $songDatas) {
     }
     return $uploadDirectories;
 }
-
+/**
+ * Move the files in a certain directory
+ * @param type $directories the directories that will contain the moved files
+ * @return boolean|array returns false if the transfer failed or an array of 
+ * the files transfered if success
+ */
 function moveFiles($directories) {
     $files = [];
     foreach ($_FILES["files"]["error"] as $key => $error) {
@@ -114,7 +135,12 @@ function moveFiles($directories) {
     }
     return true;
 }
-
+/**
+ * Detect if the files are too big compared to a specified paramter
+ * @param type $files files to analyze
+ * @param type $max the maximum in bytes 
+ * @return boolean files are too big or not
+ */
 function filesAreTooBig($files, $max) {
     $sum = 0;
     foreach ($files as $key => $file) {
@@ -124,7 +150,11 @@ function filesAreTooBig($files, $max) {
     }
     return ($sum >= $max);
 }
-
+/**
+ * Detect if the files are not .mp3
+ * @param type $files files to analyze
+ * @return boolean test value
+ */
 function filesAreNotMp3($files) {
     foreach ($files as $file) {
         $extension = pathinfo($file, PATHINFO_EXTENSION);

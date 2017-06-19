@@ -3,11 +3,11 @@
 /*
 
  * Auteur	: Michael Ramusi
- * Date	: 15 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: updatePlaylist
- * Fonction	:
+ * Fonction	: met à jour la playlist d'un utilisateur
  */
 require './database_functions.php';
 session_start();

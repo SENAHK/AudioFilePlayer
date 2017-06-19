@@ -3,11 +3,11 @@
 /*
 
  * Auteur	: Michael Ramusi
- * Date	: 14 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: getTracksOfAlbum
- * Fonction	:
+ * Fichier	: getPlaylists
+ * Fonction	: récupère les playlists de l'utilisateur
 
  */
 

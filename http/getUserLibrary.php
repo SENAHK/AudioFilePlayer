@@ -3,11 +3,11 @@
 /*
 
  * Auteur	: Michael Ramusi
- * Date	: 19 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
  * Fichier	: getUserLibrary
- * Fonction	:
+ * Fonction	: récupère les infos de la librarie de l'utilisateur
 
  */
 

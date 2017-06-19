@@ -3,11 +3,11 @@
 /*
 
  * Auteur	: Michael Ramusi
- * Date	: 16 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: addFriend
- * Fonction	:
+ * Fichier	: addFriend.php
+ * Fonction	: Insertion d'un ami dans la BD
 
  */
 

@@ -3,10 +3,10 @@
 /*
 
  * Auteur	: Michael Ramusi
- * Date         : 6 juin 2017 
+ * Date         : juin 2017 
  * Projet	: AudioFilePlayer
  * Copyright	: TPI 2017 - Michael RAMUSI
- * Fichier	: destroySession
+ * Fichier	: destroySession.php
  * Fonction	: Détruire le contenu de $_SESSION
 
  */

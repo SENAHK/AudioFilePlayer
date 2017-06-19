@@ -1,5 +1,14 @@
 <?php
+/*
 
+ * Auteur	: Michael Ramusi
+ * Date         : juin 2017 
+ * Projet	: AudioFilePlayer
+ * Copyright	: TPI 2017 - Michael RAMUSI
+ * Fichier	: insertUser
+ * Fonction	: insère un utilisateur dans la BD
+
+ */
 require './database_functions.php';
 session_start();
 
