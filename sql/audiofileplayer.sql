@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 18 Juin 2017 à 18:04
+-- Généré le :  Lun 19 Juin 2017 à 16:53
 -- Version du serveur :  5.6.15-log
 -- Version de PHP :  5.5.8
 
@@ -43,12 +43,12 @@ INSERT INTO `albums` (`idAlbum`, `nomAlbum`) VALUES
 (40, 'Just for a day'),
 (41, 'Classics'),
 (42, 'Split'),
-(43, 'Visions'),
-(44, 'Lonerism'),
-(45, 'On Fire'),
-(46, 'salut'),
-(47, 'Random Access Memories'),
-(48, 'Bloom');
+(43, 'Lonerism'),
+(44, 'Random Access Memories'),
+(45, 'Under the Pipal Tree'),
+(46, 'Just'),
+(47, 'Bloom'),
+(48, 'Hymn to the Immortal Wind');
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `artistes` (
   `idArtiste` int(11) NOT NULL AUTO_INCREMENT,
   `nomArtiste` varchar(100) NOT NULL,
   PRIMARY KEY (`idArtiste`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
 
 --
 -- Contenu de la table `artistes`
@@ -70,11 +70,10 @@ INSERT INTO `artistes` (`idArtiste`, `nomArtiste`) VALUES
 (38, 'Ratatat'),
 (39, 'Slowdive'),
 (40, 'Lush'),
-(41, 'Grimes'),
-(42, 'Tame Impala'),
-(43, 'Galaxie 500'),
-(44, 'Daft Punk'),
-(45, 'Beach House');
+(41, 'Tame Impala'),
+(42, 'Daft Punk'),
+(43, 'Mono'),
+(44, 'Beach House');
 
 -- --------------------------------------------------------
 
@@ -101,8 +100,9 @@ INSERT INTO `avoir` (`idArtiste`, `idAlbum`) VALUES
 (41, 43),
 (42, 44),
 (43, 45),
+(39, 46),
 (44, 47),
-(45, 48);
+(43, 48);
 
 -- --------------------------------------------------------
 
@@ -116,6 +116,13 @@ CREATE TABLE IF NOT EXISTS `composer` (
   PRIMARY KEY (`idTitre`,`idPlaylist`),
   KEY `FK_composer_idPlaylist` (`idPlaylist`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `composer`
+--
+
+INSERT INTO `composer` (`idTitre`, `idPlaylist`) VALUES
+(102, 8);
 
 -- --------------------------------------------------------
 
@@ -153,14 +160,17 @@ CREATE TABLE IF NOT EXISTS `playlists` (
   PRIMARY KEY (`idPlaylist`),
   UNIQUE KEY `nomPlaylist` (`nomPlaylist`),
   KEY `idUtilisateur` (`idUtilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Contenu de la table `playlists`
 --
 
 INSERT INTO `playlists` (`idPlaylist`, `nomPlaylist`, `idUtilisateur`) VALUES
-(5, 'Sleep music', 2);
+(5, 'Sleep music', 2),
+(6, 'Ma magnifique playlist', 2),
+(7, 'GoodPlaylist', 2),
+(8, 'salut mec', 2);
 
 -- --------------------------------------------------------
 
@@ -177,18 +187,14 @@ CREATE TABLE IF NOT EXISTS `titres` (
   PRIMARY KEY (`idTitre`),
   KEY `FK_titres_idAlbum` (`idAlbum`),
   KEY `FK_titres_idUtilisateur` (`idUtilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=103 ;
 
 --
 -- Contenu de la table `titres`
 --
 
 INSERT INTO `titres` (`idTitre`, `nomTitre`, `fichierTitre`, `idAlbum`, `idUtilisateur`) VALUES
-(6, 'Blue Thunder', '01 Blue Thunder.mp3', 45, 2),
-(25, 'Isn''t It A Pity', '10 Isn''t It A Pity.mp3', 45, 2),
-(26, 'Sun''s Coming Up', '12 Sun''s Coming Up.mp3', 44, 2),
-(27, 'When I Die', '12. When I Die.mp3', 42, 2),
-(29, 'The Hours', '05 The Hours.mp3', 48, 2);
+(102, 'L'' America', '07 - Mono - L'' America.mp3', 45, 2);
 
 -- --------------------------------------------------------
 
@@ -200,20 +206,21 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT,
   `nomUtilisateur` varchar(50) NOT NULL,
   `mdpUtilisateur` varchar(256) NOT NULL,
+  `imageUtilisateur` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idUtilisateur`),
   UNIQUE KEY `nomUtilisateur` (`nomUtilisateur`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`idUtilisateur`, `nomUtilisateur`, `mdpUtilisateur`) VALUES
-(1, 'admin', '8185c8ac4656219f4aa5541915079f7b3743e1b5f48bacfcc3386af016b55320'),
-(2, 'adminne', 'f6889fc97e14b42dec11a8c183ea791c5465b658'),
-(4, 'jeanne', 'f6889fc97e14b42dec11a8c183ea791c5465b658'),
-(5, 'Mike', 'a0c6737f2dad4a8001153af2b82660b2b170fd28'),
-(6, 'Mica', 'f6889fc97e14b42dec11a8c183ea791c5465b658');
+INSERT INTO `utilisateurs` (`idUtilisateur`, `nomUtilisateur`, `mdpUtilisateur`, `imageUtilisateur`) VALUES
+(1, 'admin', 'f6889fc97e14b42dec11a8c183ea791c5465b658', NULL),
+(2, 'adminne', 'f6889fc97e14b42dec11a8c183ea791c5465b658', NULL),
+(4, 'jeanne', 'f6889fc97e14b42dec11a8c183ea791c5465b658', NULL),
+(5, 'Mike', 'a0c6737f2dad4a8001153af2b82660b2b170fd28', NULL),
+(6, 'Mica', 'f6889fc97e14b42dec11a8c183ea791c5465b658', NULL);
 
 --
 -- Contraintes pour les tables exportées
