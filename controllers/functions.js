@@ -74,7 +74,10 @@ function validateString(input) {
     var expression = /^[a-zA-Z0-9]+$/;
     return input.match(expression);
 }
-
+function validateForbidden(input) {
+    var expression = /^[^\\\/&<>]*$/;
+    return input.match(expression);
+}
 function isInteger(str) {
     var n = Math.floor(Number(str));
     return String(n) === str && n >= 0;

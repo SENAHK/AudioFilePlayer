@@ -82,7 +82,7 @@ function detectEmptyInputs(selector) {
     $(selector).each(function (i) {
         var val = $(this).val();
         var formGroup = $(this).parent().parent();
-        if (val === "" || !validateString(val)) {
+        if (val === "" || !validateForbidden(val)) {
             formGroup.addClass('has-error');
             flag = false;
         } else {

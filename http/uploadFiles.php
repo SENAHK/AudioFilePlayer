@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Auteur	: Michael Ramusi
  * Date         : juin 2017 
@@ -87,6 +88,7 @@ function unlinkFiles($files) {
         }
     }
 }
+
 /**
  * Creation of the folders that will contain the files 
  * @param type $idUser the id of the user
@@ -95,6 +97,9 @@ function unlinkFiles($files) {
  */
 function createFolders($idUser, $songDatas) {
     $uploadDirectories = array();
+    if (!is_dir("../uploads")) {
+        mkdir("../uploads");
+    }
     $userDirectory = "../uploads/" . $idUser;
     if (!is_dir($userDirectory)) {
         mkdir($userDirectory);
@@ -113,6 +118,7 @@ function createFolders($idUser, $songDatas) {
     }
     return $uploadDirectories;
 }
+
 /**
  * Move the files in a certain directory
  * @param type $directories the directories that will contain the moved files
@@ -135,6 +141,7 @@ function moveFiles($directories) {
     }
     return true;
 }
+
 /**
  * Detect if the files are too big compared to a specified paramter
  * @param type $files files to analyze
@@ -150,6 +157,7 @@ function filesAreTooBig($files, $max) {
     }
     return ($sum >= $max);
 }
+
 /**
  * Detect if the files are not .mp3
  * @param type $files files to analyze
