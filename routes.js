@@ -103,9 +103,14 @@ function render(url) {
             }
         },
         '#playlists': function () {
-            $('#app').html('');
-            setActiveLink('playlists');
-            loadHtmlFile('views/playlists.html', '#app');
+            if (getUserSession() != "") {
+
+                $('#app').html('');
+                setActiveLink('playlists');
+                loadHtmlFile('views/playlists.html', '#app');
+            } else {
+                gotoRoute(routesEnum.HOME);
+            }
         },
         '#playlist': function () {
             $('#app').html('');
