@@ -76,7 +76,7 @@ function render(url) {
 
                 setActiveLink('');
                 $('#app').html('');
-                loadHtmlFile('views/upload.html', '#app');
+                loadHtmlFile('views/home.html', '#app');
                 $('.sub').css('display', 'none');
             } else {
                 // Go to the login/register page

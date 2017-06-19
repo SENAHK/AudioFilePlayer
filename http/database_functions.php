@@ -170,7 +170,7 @@ function insertNewSong($artist, $album, $song, $idUser, $fileName) {
     // prevent duplicate entries
     if (!titleExists($song, $idAlbum, $idUser)) {
         insertTitle($song, $idAlbum, $idUser, $fileName);
-    }else{
+    } else {
         throw new Exception(-2);
     }
 }
@@ -216,6 +216,24 @@ function getAlbumsOfArtist($idArtist, $idUser) {
                   GROUP BY a.nomAlbum";
         $statement = getConnexion()->prepare($query);
         $statement->bindParam(':idArtist', $idArtist, PDO::PARAM_INT);
+        $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $ex) {
+        return false;
+    }
+}
+
+function getUserLibrary($idUser) {
+    try {
+        $query = "SELECT count(distinct idTitre) as nbTitres, count(distinct a.idAlbum) as nbAlbums, t.idUtilisateur, count(distinct e.idAmi) as nbAmis "
+                . "FROM titres t "
+                . "INNER JOIN albums a ON t.idAlbum = a.idAlbum "
+                . "INNER JOIN avoir v on a.idAlbum = v.idAlbum "
+                . "INNER JOIN artistes art ON v.idArtiste = art.idArtiste "
+                . "INNER JOIN etre_ami e ON t.idUtilisateur = e.idUtilisateur "
+                . "WHERE t.idUtilisateur = :idUser";
+        $statement = getConnexion()->prepare($query);
         $statement->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
